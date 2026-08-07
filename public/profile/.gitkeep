@@ -1,0 +1,2 @@
+# Add your profile photo here as jason.jpg
+# Then update Hero.tsx / About.tsx to use next/image

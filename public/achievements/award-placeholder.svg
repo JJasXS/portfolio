@@ -1,0 +1,8 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500" role="img" aria-label="Achievement image placeholder">
+  <rect width="800" height="500" fill="#0f141c"/>
+  <rect x="24" y="24" width="752" height="452" rx="24" fill="#161d28" stroke="#2a3545" stroke-width="2" stroke-dasharray="10 8"/>
+  <circle cx="400" cy="210" r="42" fill="none" stroke="#2dd4bf" stroke-width="3" opacity="0.55"/>
+  <path d="M372 210h56M400 182v56" stroke="#2dd4bf" stroke-width="3" stroke-linecap="round" opacity="0.55"/>
+  <text x="400" y="290" text-anchor="middle" fill="#94a3b8" font-family="Segoe UI, Arial, sans-serif" font-size="22">Photo placeholder</text>
+  <text x="400" y="322" text-anchor="middle" fill="#64748b" font-family="Segoe UI, Arial, sans-serif" font-size="15">Award photo coming soon</text>
+</svg>
