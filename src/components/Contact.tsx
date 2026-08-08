@@ -2,6 +2,7 @@
 
 import { Loader2, Send } from "lucide-react";
 import { FormEvent, useState } from "react";
+import { personalInfo } from "@/data/personal";
 import { FadeIn } from "./FadeIn";
 import { SectionHeading, SectionShell } from "./Section";
 
@@ -54,45 +55,33 @@ export function Contact() {
     return Object.keys(next).length === 0;
   };
 
-  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!validate()) return;
 
     setStatus("loading");
     setServerMessage("");
 
-    try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: form.name.trim(),
-          email: form.email.trim(),
-          enquiryType: form.enquiryType,
-          message: form.message.trim(),
-        }),
-      });
+    const subject = encodeURIComponent(
+      `[Portfolio] ${form.enquiryType} - ${form.name.trim()}`,
+    );
+    const body = encodeURIComponent(
+      [
+        `Name: ${form.name.trim()}`,
+        `Email: ${form.email.trim()}`,
+        `Type: ${form.enquiryType}`,
+        "",
+        form.message.trim(),
+      ].join("\n"),
+    );
 
-      const data = (await response.json()) as { message?: string };
-
-      if (!response.ok) {
-        throw new Error(data.message || "Something went wrong.");
-      }
-
-      setStatus("success");
-      setServerMessage(
-        data.message || "Enquiry received. I'll get back to you soon.",
-      );
-      setForm(initialForm);
-      setErrors({});
-    } catch (error) {
-      setStatus("error");
-      setServerMessage(
-        error instanceof Error
-          ? error.message
-          : "Unable to send enquiry right now.",
-      );
-    }
+    window.location.href = `mailto:${personalInfo.email}?subject=${subject}&body=${body}`;
+    setStatus("success");
+    setServerMessage(
+      "Your email app should open with the enquiry ready to send.",
+    );
+    setForm(initialForm);
+    setErrors({});
   };
 
   return (
