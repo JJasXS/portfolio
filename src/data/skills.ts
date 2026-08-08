@@ -296,6 +296,8 @@ export const skills: ConstellationSkill[] = [
     name: "Google Firebase",
     category: "development",
     monogram: "Fz",
+    description:
+      "Familiar with Firebase services for app backends and supporting tooling.",
     projects: [],
     level: "Familiar",
     orbit: 3,
