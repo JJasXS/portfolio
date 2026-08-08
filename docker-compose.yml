@@ -1,6 +1,6 @@
 services:
   portfolio:
-    build: .
+    image: ghcr.io/jjasxs/portfolio:latest
     container_name: portfolio-site
     restart: unless-stopped
     networks:
