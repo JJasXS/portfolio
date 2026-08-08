@@ -10,10 +10,10 @@ export const personalInfo = {
   linkedin: "https://www.linkedin.com/in/jason-choo-7a871228a/",
   instagram: "https://www.instagram.com/jasch_04/",
   instagramHandle: "@jasch_04",
-  /** Replace with your live website URL once deployed */
-  website: "[WEBSITE URL]",
-  /** Canonical site URL for SEO. Update after deployment. */
-  siteUrl: "https://[YOUR-DOMAIN]",
+  /** Live website URL */
+  website: "https://jschoo.com",
+  /** Canonical site URL for SEO */
+  siteUrl: "https://jschoo.com",
   shortIntro:
     "I'm a software engineering graduate passionate about building practical software, learning new technologies, and turning ideas into useful solutions.",
   about: [

@@ -19,8 +19,7 @@ const siteDescription =
   "Personal portfolio and professional profile of Jason Choo Jie Sern, a software engineering graduate interested in software development, automation, AI, and technology.";
 
 export const metadata: Metadata = {
-  // Update personalInfo.siteUrl after deployment for correct absolute OG URLs.
-  metadataBase: new URL("https://example.com"),
+  metadataBase: new URL(personalInfo.siteUrl),
   title: {
     default: siteTitle,
     template: `%s | ${personalInfo.firstName}`,

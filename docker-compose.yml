@@ -1,0 +1,24 @@
+services:
+  portfolio:
+    build: .
+    container_name: portfolio-site
+    restart: unless-stopped
+    networks:
+      - n8n_default
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=n8n_default
+      - traefik.http.middlewares.portfolio-redirect.redirectscheme.scheme=https
+      - traefik.http.middlewares.portfolio-redirect.redirectscheme.permanent=true
+      - traefik.http.routers.portfolio-http.rule=Host(`jschoo.com`) || Host(`www.jschoo.com`)
+      - traefik.http.routers.portfolio-http.entrypoints=web
+      - traefik.http.routers.portfolio-http.middlewares=portfolio-redirect
+      - traefik.http.routers.portfolio.rule=Host(`jschoo.com`) || Host(`www.jschoo.com`)
+      - traefik.http.routers.portfolio.entrypoints=websecure
+      - traefik.http.routers.portfolio.tls=true
+      - traefik.http.routers.portfolio.tls.certresolver=mytlschallenge
+      - traefik.http.services.portfolio.loadbalancer.server.port=3000
+
+networks:
+  n8n_default:
+    external: true
