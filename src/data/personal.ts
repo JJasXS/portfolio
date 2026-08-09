@@ -6,7 +6,6 @@ export const personalInfo = {
   tagline: "Software Engineer | Builder | Technology Enthusiast",
   location: "Penang, Malaysia",
   email: "jason.choo2004@gmail.com",
-  phone: "017-546 2962",
   linkedin: "https://www.linkedin.com/in/jason-choo-7a871228a/",
   instagram: "https://www.instagram.com/jasch_04/",
   instagramHandle: "@jasch_04",

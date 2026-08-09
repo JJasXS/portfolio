@@ -117,11 +117,6 @@ export function DigitalCard() {
               value={personalInfo.email}
               href={`mailto:${personalInfo.email}`}
             />
-            <ContactLine
-              label="Phone"
-              value={personalInfo.phone}
-              href={`tel:${personalInfo.phone.replace(/\s+/g, "")}`}
-            />
           </dl>
 
           {/* Social: compact links, not field cards showing placeholders */}

@@ -85,7 +85,6 @@ export function downloadCardImage(filename = "Jason-Choo-Card.png") {
   // Contact rows
   const rows: Array<[string, string]> = [
     ["Email", personalInfo.email],
-    ["Phone", personalInfo.phone],
   ];
 
   if (!isPlaceholderLink(personalInfo.linkedin)) {
