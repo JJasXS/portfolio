@@ -3,26 +3,8 @@
 import { ArrowDown, ArrowRight } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import { personalInfo } from "@/data/personal";
+import { ProfilePhoto } from "./ProfilePhoto";
 import { SocialIcons } from "./SocialIcons";
-
-function ProfilePlaceholder({ className = "" }: { className?: string }) {
-  return (
-    <div
-      className={`relative overflow-hidden rounded-3xl border border-border bg-surface-soft ${className}`}
-      aria-hidden="true"
-    >
-      <div className="absolute inset-0 bg-gradient-to-br from-accent/20 via-transparent to-accent-2/20" />
-      <div className="absolute -right-8 -top-8 h-40 w-40 rounded-full bg-accent/20 blur-3xl" />
-      <div className="flex h-full min-h-[280px] items-center justify-center sm:min-h-[360px]">
-        <div className="flex h-36 w-36 items-center justify-center rounded-full border border-border bg-surface text-4xl font-semibold tracking-tight text-accent sm:h-44 sm:w-44 sm:text-5xl">
-          {personalInfo.firstName.slice(0, 1)}
-          {personalInfo.lastName.slice(0, 1)}
-        </div>
-      </div>
-      <span className="sr-only">Profile image placeholder</span>
-    </div>
-  );
-}
 
 export function Hero() {
   const reduce = useReducedMotion();
@@ -116,20 +98,49 @@ export function Hero() {
           initial={reduce ? false : { opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.55, delay: 0.15 }}
-          className="relative"
+          className="relative mx-auto w-full max-w-[280px] pb-2 sm:max-w-[320px] lg:ml-auto lg:mr-0 lg:max-w-[340px]"
         >
-          {/*
-            Replace ProfilePlaceholder with next/image when you add
-            a photo at /public/profile/jason.jpg
-          */}
-          <ProfilePlaceholder />
-          <div className="absolute -bottom-4 left-4 right-4 rounded-2xl border border-border bg-surface/90 p-4 backdrop-blur-md sm:left-8 sm:right-8">
-            <p className="text-sm font-medium text-foreground">
-              {personalInfo.role}
-            </p>
-            <p className="mt-1 text-xs text-muted">
-              {personalInfo.location} · {personalInfo.lookingFor}
-            </p>
+          <ProfilePhoto
+            priority
+            className="w-full"
+            sizes="(max-width: 1024px) 280px, 340px"
+          />
+
+          <div className="absolute inset-x-3 bottom-3 z-20 sm:inset-x-3.5 sm:bottom-3.5">
+            <div className="relative overflow-hidden rounded-xl border border-accent/30 bg-[#070a0e]/82 px-3 py-2.5 shadow-[0_12px_28px_-16px_rgba(0,0,0,0.75)] backdrop-blur-md dark:bg-[#070a0e]/78">
+              <span
+                className="pointer-events-none absolute left-0 top-0 h-2 w-2 border-l border-t border-accent/70"
+                aria-hidden
+              />
+              <span
+                className="pointer-events-none absolute right-0 top-0 h-2 w-2 border-r border-t border-accent/70"
+                aria-hidden
+              />
+              <span
+                className="pointer-events-none absolute bottom-0 left-0 h-2 w-2 border-b border-l border-accent/70"
+                aria-hidden
+              />
+              <span
+                className="pointer-events-none absolute bottom-0 right-0 h-2 w-2 border-b border-r border-accent/70"
+                aria-hidden
+              />
+
+              <div className="flex items-baseline justify-between gap-2">
+                <p className="text-[9px] font-medium uppercase tracking-[0.2em] text-accent">
+                  Currently
+                </p>
+                <p className="font-mono text-[9px] tracking-wide text-slate-400">
+                  Penang
+                </p>
+              </div>
+              <p className="mt-1 text-[13px] font-semibold tracking-tight text-slate-50">
+                {personalInfo.role}
+              </p>
+              <p className="text-[11px] text-slate-400">{personalInfo.company}</p>
+              <p className="mt-2 border-t border-white/10 pt-1.5 text-[10px] leading-snug text-slate-400">
+                {personalInfo.lookingFor}
+              </p>
+            </div>
           </div>
         </motion.div>
       </div>

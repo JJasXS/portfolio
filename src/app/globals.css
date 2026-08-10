@@ -126,8 +126,166 @@ body {
   animation: constellation-float 6s ease-in-out infinite;
 }
 
+/* Profile digital scanner — 8s sweep, ~9s idle → 17s loop */
+@keyframes profile-scan-beam {
+  0% {
+    top: 0%;
+    opacity: 0;
+  }
+  2% {
+    opacity: 1;
+  }
+  47% {
+    top: 100%;
+    opacity: 0.9;
+  }
+  52% {
+    top: 100%;
+    opacity: 0;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes profile-scan-pulse {
+  0%,
+  45% {
+    opacity: 0;
+  }
+  48% {
+    opacity: 0.9;
+  }
+  56% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.profile-scan-grid {
+  background-image:
+    linear-gradient(to right, rgba(45, 212, 191, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(45, 212, 191, 0.07) 1px, transparent 1px);
+  background-size: 22px 22px;
+  opacity: 0.35;
+  mask-image: radial-gradient(ellipse at center, black 35%, transparent 78%);
+}
+
+.profile-scan-beam {
+  height: 2.25rem;
+  top: 0;
+  transform: translateY(-50%);
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(74, 222, 128, 0.03) 22%,
+    rgba(74, 222, 128, 0.14) 45%,
+    rgba(134, 239, 172, 0.28) 50%,
+    rgba(74, 222, 128, 0.12) 58%,
+    transparent 100%
+  );
+  animation: profile-scan-beam 17s linear infinite;
+  will-change: top, opacity;
+  filter: blur(0.6px);
+  clip-path: polygon(
+    0% 42%,
+    8% 38%,
+    18% 46%,
+    28% 40%,
+    40% 48%,
+    52% 39%,
+    64% 47%,
+    76% 41%,
+    88% 45%,
+    100% 40%,
+    100% 62%,
+    90% 58%,
+    78% 66%,
+    66% 57%,
+    54% 64%,
+    42% 56%,
+    30% 63%,
+    18% 55%,
+    8% 61%,
+    0% 58%
+  );
+}
+
+.profile-scan-beam-core {
+  position: absolute;
+  left: 2%;
+  right: 2%;
+  top: 44%;
+  height: 2.5px;
+  border-radius: 40% 60% 55% 45% / 70% 40% 60% 50%;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(74, 222, 128, 0.2) 8%,
+    rgba(187, 247, 208, 0.75) 35%,
+    rgba(74, 222, 128, 0.85) 50%,
+    rgba(187, 247, 208, 0.7) 65%,
+    rgba(74, 222, 128, 0.2) 92%,
+    transparent 100%
+  );
+  box-shadow:
+    0 0 5px 1px rgba(74, 222, 128, 0.55),
+    0 0 12px 3px rgba(45, 212, 191, 0.28),
+    0 0 22px 5px rgba(45, 212, 191, 0.12);
+  opacity: 0.88;
+  transform: skewX(-1.2deg) rotate(-0.35deg);
+}
+
+.profile-scan-beam-core::before,
+.profile-scan-beam-core::after {
+  content: "";
+  position: absolute;
+  left: 6%;
+  right: 6%;
+  height: 1px;
+  border-radius: 9999px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(220, 252, 231, 0.35),
+    transparent
+  );
+  opacity: 0.45;
+  filter: blur(0.8px);
+}
+
+.profile-scan-beam-core::before {
+  top: -3px;
+  transform: rotate(0.4deg);
+}
+
+.profile-scan-beam-core::after {
+  bottom: -3px;
+  transform: rotate(-0.5deg);
+  opacity: 0.3;
+}
+
+.profile-scan-pulse {
+  background: radial-gradient(
+    ellipse 85% 100% at 50% 100%,
+    rgba(74, 222, 128, 0.4),
+    transparent 70%
+  );
+  animation: profile-scan-pulse 17s linear infinite;
+  will-change: opacity;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .constellation-float {
     animation: none;
+  }
+
+  .profile-scan-beam,
+  .profile-scan-pulse {
+    animation: none;
+    opacity: 0;
   }
 }

@@ -6,6 +6,7 @@ export const personalInfo = {
   tagline: "Software Engineer | Builder | Technology Enthusiast",
   location: "Penang, Malaysia",
   email: "jason.choo2004@gmail.com",
+  phone: "XXX-XXX XXXX",
   linkedin: "https://www.linkedin.com/in/jason-choo-7a871228a/",
   instagram: "https://www.instagram.com/jasch_04/",
   instagramHandle: "@jasch_04",
@@ -13,6 +14,9 @@ export const personalInfo = {
   website: "https://jschoo.com",
   /** Canonical site URL for SEO */
   siteUrl: "https://jschoo.com",
+  /** Profile photo under /public */
+  profileImage: "/profile/profile_picture.jpg",
+  company: "Procc System Consulting",
   shortIntro:
     "I'm a software engineering graduate passionate about building practical software, learning new technologies, and turning ideas into useful solutions.",
   about: [
@@ -28,8 +32,7 @@ export const personalInfo = {
     "Continuous learning",
   ],
   languages: ["Bahasa Melayu", "English", "Mandarin"],
-  lookingFor:
-    "Currently a Software Engineer at Procc System Consulting. Open to meaningful opportunities and collaborations.",
+  lookingFor: "Open to meaningful opportunities and collaborations.",
 } as const;
 
 export const socialLinks = [

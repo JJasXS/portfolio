@@ -16,7 +16,7 @@ function ContactLine({
 }: {
   label: string;
   value: string;
-  href: string;
+  href?: string;
 }) {
   return (
     <>
@@ -24,12 +24,16 @@ function ContactLine({
         {label}
       </dt>
       <dd className="pb-3 sm:pb-0">
-        <a
-          href={href}
-          className="text-[15px] text-foreground underline-offset-4 transition hover:text-accent hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-        >
-          {value}
-        </a>
+        {href ? (
+          <a
+            href={href}
+            className="text-[15px] text-foreground underline-offset-4 transition hover:text-accent hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+          >
+            {value}
+          </a>
+        ) : (
+          <span className="text-[15px] text-foreground">{value}</span>
+        )}
       </dd>
     </>
   );
@@ -117,6 +121,7 @@ export function DigitalCard() {
               value={personalInfo.email}
               href={`mailto:${personalInfo.email}`}
             />
+            <ContactLine label="Phone" value={personalInfo.phone} />
           </dl>
 
           {/* Social: compact links, not field cards showing placeholders */}
