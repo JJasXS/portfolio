@@ -126,6 +126,35 @@ body {
   animation: constellation-float 6s ease-in-out infinite;
 }
 
+@keyframes json-caret {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.json-caret {
+  animation: json-caret 1.1s steps(1, end) infinite;
+}
+
+@keyframes git-head-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(45, 212, 191, 0.45);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(45, 212, 191, 0);
+  }
+}
+
+.git-head-pulse {
+  animation: git-head-pulse 2s ease-out infinite;
+}
+
 /* Profile digital scanner — 8s sweep, ~9s idle → 17s loop */
 @keyframes profile-scan-beam {
   0% {
@@ -280,6 +309,15 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .constellation-float {
+    animation: none;
+  }
+
+  .json-caret {
+    animation: none;
+    opacity: 0.7;
+  }
+
+  .git-head-pulse {
     animation: none;
   }
 

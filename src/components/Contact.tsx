@@ -3,6 +3,7 @@
 import { Loader2, Send } from "lucide-react";
 import { FormEvent, useState } from "react";
 import { personalInfo } from "@/data/personal";
+import { DigitalCardPanel } from "./DigitalCard";
 import { FadeIn } from "./FadeIn";
 import { SectionHeading, SectionShell } from "./Section";
 
@@ -91,165 +92,189 @@ export function Contact() {
           eyebrow="Contact"
           title="Let's Connect"
           description="Have an opportunity, project, or question? Feel free to reach out."
-          align="center"
         />
       </FadeIn>
 
-      <FadeIn delay={0.08} className="mx-auto mt-10 max-w-2xl">
-        <form
-          onSubmit={onSubmit}
-          noValidate
-          className="glass rounded-3xl p-6 sm:p-8"
-        >
-          <div className="grid gap-5">
-            <div>
-              <label
-                htmlFor="name"
-                className="mb-2 block text-sm font-medium text-foreground"
-              >
-                Name
-              </label>
-              <input
-                id="name"
-                name="name"
-                autoComplete="name"
-                value={form.name}
-                onChange={(e) =>
-                  setForm((prev) => ({ ...prev, name: e.target.value }))
-                }
-                className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground outline-none transition placeholder:text-muted focus:border-accent focus:ring-2 focus:ring-accent/30"
-                placeholder="Your name"
-                aria-invalid={Boolean(errors.name)}
-                aria-describedby={errors.name ? "name-error" : undefined}
-              />
-              {errors.name ? (
-                <p id="name-error" className="mt-2 text-sm text-danger">
-                  {errors.name}
-                </p>
-              ) : null}
-            </div>
-
-            <div>
-              <label
-                htmlFor="email"
-                className="mb-2 block text-sm font-medium text-foreground"
-              >
-                Email
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                value={form.email}
-                onChange={(e) =>
-                  setForm((prev) => ({ ...prev, email: e.target.value }))
-                }
-                className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground outline-none transition placeholder:text-muted focus:border-accent focus:ring-2 focus:ring-accent/30"
-                placeholder="you@example.com"
-                aria-invalid={Boolean(errors.email)}
-                aria-describedby={errors.email ? "email-error" : undefined}
-              />
-              {errors.email ? (
-                <p id="email-error" className="mt-2 text-sm text-danger">
-                  {errors.email}
-                </p>
-              ) : null}
-            </div>
-
-            <div>
-              <label
-                htmlFor="enquiryType"
-                className="mb-2 block text-sm font-medium text-foreground"
-              >
-                Enquiry Type
-              </label>
-              <select
-                id="enquiryType"
-                name="enquiryType"
-                value={form.enquiryType}
-                onChange={(e) =>
-                  setForm((prev) => ({
-                    ...prev,
-                    enquiryType: e.target.value,
-                  }))
-                }
-                className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground outline-none transition focus:border-accent focus:ring-2 focus:ring-accent/30"
-                aria-invalid={Boolean(errors.enquiryType)}
-                aria-describedby={
-                  errors.enquiryType ? "enquiryType-error" : undefined
-                }
-              >
-                <option value="">Select enquiry type</option>
-                {enquiryTypes.map((type) => (
-                  <option key={type} value={type}>
-                    {type}
-                  </option>
-                ))}
-              </select>
-              {errors.enquiryType ? (
-                <p id="enquiryType-error" className="mt-2 text-sm text-danger">
-                  {errors.enquiryType}
-                </p>
-              ) : null}
-            </div>
-
-            <div>
-              <label
-                htmlFor="message"
-                className="mb-2 block text-sm font-medium text-foreground"
-              >
-                Message
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                rows={5}
-                value={form.message}
-                onChange={(e) =>
-                  setForm((prev) => ({ ...prev, message: e.target.value }))
-                }
-                className="w-full resize-y rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground outline-none transition placeholder:text-muted focus:border-accent focus:ring-2 focus:ring-accent/30"
-                placeholder="Share a short note about the opportunity or question..."
-                aria-invalid={Boolean(errors.message)}
-                aria-describedby={errors.message ? "message-error" : undefined}
-              />
-              {errors.message ? (
-                <p id="message-error" className="mt-2 text-sm text-danger">
-                  {errors.message}
-                </p>
-              ) : null}
-            </div>
+      <div className="mt-10 grid min-w-0 items-start gap-8 lg:grid-cols-2 lg:gap-8">
+        <FadeIn delay={0.06} className="min-w-0">
+          <div className="mb-3">
+            <p className="text-sm font-medium tracking-wide text-accent">
+              Send a message
+            </p>
+            <p className="mt-1 text-sm text-muted">
+              Fill in the form and I&apos;ll get back to you.
+            </p>
           </div>
 
-          <button
-            type="submit"
-            disabled={status === "loading"}
-            className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3 text-sm font-medium text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent dark:text-background sm:w-auto"
+          <form
+            onSubmit={onSubmit}
+            noValidate
+            className="glass rounded-3xl p-6 sm:p-7"
           >
-            {status === "loading" ? (
-              <>
-                <Loader2 className="h-4 w-4 animate-spin" />
-                Sending...
-              </>
-            ) : (
-              <>
-                <Send className="h-4 w-4" />
-                Send Enquiry
-              </>
-            )}
-          </button>
+            <div className="grid gap-5">
+              <div>
+                <label
+                  htmlFor="name"
+                  className="mb-2 block text-sm font-medium text-foreground"
+                >
+                  Name
+                </label>
+                <input
+                  id="name"
+                  name="name"
+                  autoComplete="name"
+                  value={form.name}
+                  onChange={(e) =>
+                    setForm((prev) => ({ ...prev, name: e.target.value }))
+                  }
+                  className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground outline-none transition placeholder:text-muted focus:border-accent focus:ring-2 focus:ring-accent/30"
+                  placeholder="Your name"
+                  aria-invalid={Boolean(errors.name)}
+                  aria-describedby={errors.name ? "name-error" : undefined}
+                />
+                {errors.name ? (
+                  <p id="name-error" className="mt-2 text-sm text-danger">
+                    {errors.name}
+                  </p>
+                ) : null}
+              </div>
 
-          <div className="mt-4 min-h-6" aria-live="polite">
-            {status === "success" ? (
-              <p className="text-sm text-success">{serverMessage}</p>
-            ) : null}
-            {status === "error" ? (
-              <p className="text-sm text-danger">{serverMessage}</p>
-            ) : null}
+              <div>
+                <label
+                  htmlFor="email"
+                  className="mb-2 block text-sm font-medium text-foreground"
+                >
+                  Email
+                </label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  value={form.email}
+                  onChange={(e) =>
+                    setForm((prev) => ({ ...prev, email: e.target.value }))
+                  }
+                  className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground outline-none transition placeholder:text-muted focus:border-accent focus:ring-2 focus:ring-accent/30"
+                  placeholder="you@example.com"
+                  aria-invalid={Boolean(errors.email)}
+                  aria-describedby={errors.email ? "email-error" : undefined}
+                />
+                {errors.email ? (
+                  <p id="email-error" className="mt-2 text-sm text-danger">
+                    {errors.email}
+                  </p>
+                ) : null}
+              </div>
+
+              <div>
+                <label
+                  htmlFor="enquiryType"
+                  className="mb-2 block text-sm font-medium text-foreground"
+                >
+                  Enquiry Type
+                </label>
+                <select
+                  id="enquiryType"
+                  name="enquiryType"
+                  value={form.enquiryType}
+                  onChange={(e) =>
+                    setForm((prev) => ({
+                      ...prev,
+                      enquiryType: e.target.value,
+                    }))
+                  }
+                  className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground outline-none transition focus:border-accent focus:ring-2 focus:ring-accent/30"
+                  aria-invalid={Boolean(errors.enquiryType)}
+                  aria-describedby={
+                    errors.enquiryType ? "enquiryType-error" : undefined
+                  }
+                >
+                  <option value="">Select enquiry type</option>
+                  {enquiryTypes.map((type) => (
+                    <option key={type} value={type}>
+                      {type}
+                    </option>
+                  ))}
+                </select>
+                {errors.enquiryType ? (
+                  <p id="enquiryType-error" className="mt-2 text-sm text-danger">
+                    {errors.enquiryType}
+                  </p>
+                ) : null}
+              </div>
+
+              <div>
+                <label
+                  htmlFor="message"
+                  className="mb-2 block text-sm font-medium text-foreground"
+                >
+                  Message
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows={5}
+                  value={form.message}
+                  onChange={(e) =>
+                    setForm((prev) => ({ ...prev, message: e.target.value }))
+                  }
+                  className="w-full resize-y rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground outline-none transition placeholder:text-muted focus:border-accent focus:ring-2 focus:ring-accent/30"
+                  placeholder="Share a short note about the opportunity or question..."
+                  aria-invalid={Boolean(errors.message)}
+                  aria-describedby={
+                    errors.message ? "message-error" : undefined
+                  }
+                />
+                {errors.message ? (
+                  <p id="message-error" className="mt-2 text-sm text-danger">
+                    {errors.message}
+                  </p>
+                ) : null}
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              disabled={status === "loading"}
+              className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3 text-sm font-medium text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent dark:text-background sm:w-auto"
+            >
+              {status === "loading" ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  Sending...
+                </>
+              ) : (
+                <>
+                  <Send className="h-4 w-4" />
+                  Send Enquiry
+                </>
+              )}
+            </button>
+
+            <div className="mt-4 min-h-6" aria-live="polite">
+              {status === "success" ? (
+                <p className="text-sm text-success">{serverMessage}</p>
+              ) : null}
+              {status === "error" ? (
+                <p className="text-sm text-danger">{serverMessage}</p>
+              ) : null}
+            </div>
+          </form>
+        </FadeIn>
+
+        <FadeIn delay={0.1} className="min-w-0 lg:sticky lg:top-28">
+          <div className="mb-3">
+            <p className="text-sm font-medium tracking-wide text-accent">
+              Digital name card
+            </p>
+            <p className="mt-1 text-sm text-muted">
+              Prefer a direct link? Grab my details here.
+            </p>
           </div>
-        </form>
-      </FadeIn>
+          <DigitalCardPanel />
+        </FadeIn>
+      </div>
     </SectionShell>
   );
 }

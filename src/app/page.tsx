@@ -1,7 +1,6 @@
 import { About } from "@/components/About";
 import { Achievements } from "@/components/Achievements";
 import { Contact } from "@/components/Contact";
-import { DigitalCard } from "@/components/DigitalCard";
 import { Experience } from "@/components/Experience";
 import { FloatingContact } from "@/components/FloatingContact";
 import { Footer } from "@/components/Footer";
@@ -25,7 +24,6 @@ export default function HomePage() {
       <main id="main">
         <Hero />
         <About />
-        <DigitalCard />
         <Journey />
         <Skills />
         <Learning />
