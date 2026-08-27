@@ -3,10 +3,11 @@
 import { Mail } from "lucide-react";
 import { personalInfo, socialLinks } from "@/data/personal";
 import { isPlaceholderLink } from "@/lib/utils";
-import { InstagramIcon, LinkedInIcon } from "./icons";
+import { GitHubIcon, InstagramIcon, LinkedInIcon } from "./icons";
 
 const icons = {
   linkedin: LinkedInIcon,
+  github: GitHubIcon,
   instagram: InstagramIcon,
   email: Mail,
 } as const;

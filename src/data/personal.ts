@@ -8,6 +8,8 @@ export const personalInfo = {
   email: "jason.choo2004@gmail.com",
   phone: "XXX-XXX XXXX",
   linkedin: "https://www.linkedin.com/in/jason-choo-7a871228a/",
+  github: "https://github.com/JJasXS",
+  githubHandle: "JJasXS",
   instagram: "https://www.instagram.com/jasch_04/",
   instagramHandle: "@jasch_04",
   /** Live website URL */
@@ -43,6 +45,12 @@ export const socialLinks = [
     external: true,
   },
   {
+    id: "github",
+    label: "GitHub",
+    href: personalInfo.github,
+    external: true,
+  },
+  {
     id: "instagram",
     label: "Instagram",
     href: personalInfo.instagram,
@@ -57,11 +65,11 @@ export const socialLinks = [
 ] as const;
 
 export const navLinks = [
-  { href: "#home", label: "Home" },
-  { href: "#about", label: "About" },
-  { href: "#journey", label: "Journey" },
-  { href: "#skills", label: "Skills" },
-  { href: "#projects", label: "Projects" },
-  { href: "#experience", label: "Experience" },
-  { href: "#contact", label: "Contact" },
+  { href: "/#home", label: "Home" },
+  { href: "/#about", label: "About" },
+  { href: "/#journey", label: "Journey" },
+  { href: "/#skills", label: "Skills" },
+  { href: "/portfolio", label: "Portfolio" },
+  { href: "/#experience", label: "Experience" },
+  { href: "/#contact", label: "Contact" },
 ] as const;

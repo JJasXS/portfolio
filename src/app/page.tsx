@@ -8,7 +8,7 @@ import { Hero } from "@/components/Hero";
 import { Journey } from "@/components/Journey";
 import { Learning } from "@/components/Learning";
 import { Navbar } from "@/components/Navbar";
-import { Projects } from "@/components/Projects";
+import { ProjectsPreview } from "@/components/Projects";
 import { Skills } from "@/components/Skills";
 
 export default function HomePage() {
@@ -27,7 +27,7 @@ export default function HomePage() {
         <Journey />
         <Skills />
         <Learning />
-        <Projects />
+        <ProjectsPreview />
         <Experience />
         <Achievements />
         <Contact />

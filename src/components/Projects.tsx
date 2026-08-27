@@ -1,13 +1,10 @@
 "use client";
 
 import { ExternalLink } from "lucide-react";
-import { useMemo, useState } from "react";
-import {
-  projectCategories,
-  projects,
-  type Project,
-  type ProjectCategory,
-} from "@/data/projects";
+import { useState } from "react";
+import Link from "next/link";
+import { PORTFOLIO_LOCKED, projects, type Project } from "@/data/projects";
+import { LockedPanel } from "./LockedPanel";
 import { isPlaceholderLink } from "@/lib/utils";
 import {
   DetailModal,
@@ -77,121 +74,88 @@ function ProjectDetail({ project }: { project: Project }) {
   );
 }
 
-export function Projects() {
-  const [filter, setFilter] = useState<ProjectCategory | "All">("All");
+export function ProjectCard({
+  project,
+  onOpen,
+}: {
+  project: Project;
+  onOpen: (id: string) => void;
+}) {
+  return (
+    <article className="group glass flex h-full flex-col rounded-2xl p-4 transition hover:border-accent/30 sm:p-5">
+      <ProjectThumb
+        title={project.title}
+        placeholder={project.placeholder}
+        hasDemo={Boolean(project.demo && !isPlaceholderLink(project.demo))}
+      />
+
+      <div className="mt-4 flex flex-1 flex-col">
+        <div className="flex flex-wrap items-center gap-2">
+          <h3 className="text-lg font-semibold text-foreground">
+            {project.title}
+          </h3>
+          <span className="rounded-full border border-border px-2 py-0.5 text-[11px] text-muted">
+            {project.category}
+          </span>
+        </div>
+
+        <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-muted">
+          {project.description}
+        </p>
+
+        <ul className="mt-3 flex flex-wrap gap-1.5">
+          {project.technologies.slice(0, 4).map((tech) => (
+            <li
+              key={tech}
+              className="rounded-full bg-surface-soft px-2.5 py-1 text-xs text-muted"
+            >
+              {tech}
+            </li>
+          ))}
+          {project.technologies.length > 4 ? (
+            <li className="rounded-full bg-surface-soft px-2.5 py-1 text-xs text-muted">
+              +{project.technologies.length - 4}
+            </li>
+          ) : null}
+        </ul>
+
+        <div className="mt-auto flex flex-wrap items-center gap-3 pt-4">
+          <button
+            type="button"
+            onClick={() => onOpen(project.id)}
+            className="text-sm font-medium text-accent transition hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+          >
+            View more
+          </button>
+
+          {project.demo && !isPlaceholderLink(project.demo) ? (
+            <a
+              href={project.demo}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-sm text-muted transition hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+            >
+              <ExternalLink className="h-3.5 w-3.5" />
+              Demo
+            </a>
+          ) : null}
+        </div>
+      </div>
+    </article>
+  );
+}
+
+export function ProjectGrid({ items }: { items: Project[] }) {
   const [activeId, setActiveId] = useState<string | null>(null);
-
-  const visible = useMemo(() => {
-    if (filter === "All") return projects;
-    return projects.filter((project) => project.category === filter);
-  }, [filter]);
-
-  const active = projects.find((project) => project.id === activeId) ?? null;
+  const active = items.find((project) => project.id === activeId) ?? null;
 
   return (
-    <SectionShell id="projects">
-      <FadeIn>
-        <SectionHeading
-          eyebrow="Portfolio"
-          title="What I've Built"
-          description="Selected systems from professional work. Tap a project to view more details."
-        />
-      </FadeIn>
-
-      <FadeIn delay={0.05} className="mt-8">
-        <div
-          className="flex flex-wrap gap-2"
-          role="tablist"
-          aria-label="Filter projects by category"
-        >
-          {projectCategories.map((category) => {
-            const selected = filter === category;
-            return (
-              <button
-                key={category}
-                type="button"
-                role="tab"
-                aria-selected={selected}
-                onClick={() => setFilter(category)}
-                className={`rounded-full px-3.5 py-1.5 text-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
-                  selected
-                    ? "bg-accent text-white dark:text-background"
-                    : "border border-border bg-surface text-muted hover:text-foreground"
-                }`}
-              >
-                {category}
-              </button>
-            );
-          })}
-        </div>
-      </FadeIn>
-
-      <ul className="mt-10 grid gap-5 md:grid-cols-2">
-        {visible.map((project, index) => (
+    <>
+      <ul className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+        {items.map((project, index) => (
           <li key={project.id}>
             <FadeIn delay={index * 0.04}>
-              <article className="group glass flex h-full flex-col rounded-2xl p-4 transition hover:border-accent/30 sm:p-5">
-                <ProjectThumb
-                  title={project.title}
-                  placeholder={project.placeholder}
-                  hasDemo={Boolean(
-                    project.demo && !isPlaceholderLink(project.demo),
-                  )}
-                />
-
-                <div className="mt-4 flex flex-1 flex-col">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <h3 className="text-lg font-semibold text-foreground">
-                      {project.title}
-                    </h3>
-                    <span className="rounded-full border border-border px-2 py-0.5 text-[11px] text-muted">
-                      {project.category}
-                    </span>
-                  </div>
-
-                  <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-muted">
-                    {project.description}
-                  </p>
-
-                  <ul className="mt-3 flex flex-wrap gap-1.5">
-                    {project.technologies.slice(0, 4).map((tech) => (
-                      <li
-                        key={tech}
-                        className="rounded-full bg-surface-soft px-2.5 py-1 text-xs text-muted"
-                      >
-                        {tech}
-                      </li>
-                    ))}
-                    {project.technologies.length > 4 ? (
-                      <li className="rounded-full bg-surface-soft px-2.5 py-1 text-xs text-muted">
-                        +{project.technologies.length - 4}
-                      </li>
-                    ) : null}
-                  </ul>
-
-                  <div className="mt-auto flex flex-wrap items-center gap-3 pt-4">
-                    <button
-                      type="button"
-                      onClick={() => setActiveId(project.id)}
-                      className="text-sm font-medium text-accent transition hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-                    >
-                      View more
-                    </button>
-
-                    {project.demo && !isPlaceholderLink(project.demo) ? (
-                      <a
-                        href={project.demo}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 text-sm text-muted transition hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-                      >
-                        <ExternalLink className="h-3.5 w-3.5" />
-                        Demo
-                      </a>
-                    ) : null}
-                  </div>
-                </div>
-              </article>
+              <ProjectCard project={project} onOpen={setActiveId} />
             </FadeIn>
           </li>
         ))}
@@ -205,6 +169,52 @@ export function Projects() {
       >
         {active ? <ProjectDetail project={active} /> : null}
       </DetailModal>
+    </>
+  );
+}
+
+export function ProjectsPreview() {
+  if (PORTFOLIO_LOCKED) {
+    return (
+      <SectionShell id="projects">
+        <FadeIn>
+          <SectionHeading
+            eyebrow="Portfolio"
+            title="What I've Built"
+            description="Selected work is being prepared and is locked for now."
+          />
+        </FadeIn>
+        <FadeIn delay={0.06} className="mt-10">
+          <LockedPanel title="Portfolio is locked" />
+        </FadeIn>
+      </SectionShell>
+    );
+  }
+
+  const preview = projects.slice(0, 3);
+
+  return (
+    <SectionShell id="projects">
+      <FadeIn>
+        <SectionHeading
+          eyebrow="Portfolio"
+          title="What I've Built"
+          description="Selected systems and websites from professional work. Open the full portfolio for everything in one place."
+        />
+      </FadeIn>
+
+      <div className="mt-10">
+        <ProjectGrid items={preview} />
+      </div>
+
+      <FadeIn delay={0.12} className="mt-8">
+        <Link
+          href="/portfolio"
+          className="inline-flex items-center gap-2 rounded-xl bg-accent px-5 py-3 text-sm font-medium text-white transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent dark:text-background"
+        >
+          Open full portfolio
+        </Link>
+      </FadeIn>
     </SectionShell>
   );
 }

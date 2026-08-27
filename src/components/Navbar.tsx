@@ -1,15 +1,19 @@
 "use client";
 
-import { Menu, X } from "lucide-react";
+import { Lock, Menu, X } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { useEffect, useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useState, type MouseEvent } from "react";
 import { navLinks, personalInfo } from "@/data/personal";
+import { PORTFOLIO_LOCKED } from "@/data/projects";
 import { ThemeToggle } from "./ThemeToggle";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const reduce = useReducedMotion();
+  const pathname = usePathname();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -25,10 +29,17 @@ export function Navbar() {
     };
   }, [open]);
 
-  const handleNav = (href: string) => {
+  const handleNav = (href: string, event: MouseEvent<HTMLAnchorElement>) => {
     setOpen(false);
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
+    const hashIndex = href.indexOf("#");
+    if (hashIndex === -1) return;
+
+    const hash = href.slice(hashIndex);
+    if (pathname === "/" || pathname === "") {
+      event.preventDefault();
+      const el = document.querySelector(hash);
+      if (el) el.scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
+    }
   };
 
   return (
@@ -40,35 +51,40 @@ export function Navbar() {
       }`}
     >
       <nav
-        className="mx-auto flex max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8"
+        className="mx-auto flex max-w-[1600px] items-center justify-between px-4 sm:px-6 lg:px-10 xl:px-14"
         aria-label="Primary"
       >
-        <a
-          href="#home"
-          onClick={(e) => {
-            e.preventDefault();
-            handleNav("#home");
-          }}
+        <Link
+          href="/#home"
+          onClick={(e) => handleNav("/#home", e)}
           className="text-lg font-semibold tracking-tight text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
         >
           {personalInfo.firstName}
-        </a>
+        </Link>
 
         <ul className="hidden items-center gap-1 md:flex">
-          {navLinks.map((link) => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleNav(link.href);
-                }}
-                className="rounded-lg px-3 py-2 text-sm text-muted transition hover:bg-accent-soft hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
+          {navLinks.map((link) => {
+            const active =
+              link.href === "/portfolio"
+                ? pathname.startsWith("/portfolio")
+                : false;
+            return (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  onClick={(e) => handleNav(link.href, e)}
+                  className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm transition hover:bg-accent-soft hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
+                    active ? "text-foreground" : "text-muted"
+                  }`}
+                >
+                  {link.label}
+                  {link.href === "/portfolio" && PORTFOLIO_LOCKED ? (
+                    <Lock className="h-3 w-3 opacity-70" aria-hidden />
+                  ) : null}
+                </Link>
+              </li>
+            );
+          })}
         </ul>
 
         <div className="flex items-center gap-2">
@@ -96,19 +112,19 @@ export function Navbar() {
             transition={{ duration: 0.2 }}
             className="border-b border-border bg-background/95 backdrop-blur-xl md:hidden"
           >
-            <ul className="mx-auto flex max-w-6xl flex-col gap-1 px-4 py-4">
+            <ul className="mx-auto flex max-w-[1600px] flex-col gap-1 px-4 py-4 sm:px-6 lg:px-10 xl:px-14">
               {navLinks.map((link) => (
                 <li key={link.href}>
-                  <a
+                  <Link
                     href={link.href}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleNav(link.href);
-                    }}
-                    className="block rounded-lg px-3 py-3 text-base text-foreground hover:bg-accent-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                    onClick={(e) => handleNav(link.href, e)}
+                    className="inline-flex items-center gap-2 rounded-lg px-3 py-3 text-base text-foreground hover:bg-accent-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                   >
                     {link.label}
-                  </a>
+                    {link.href === "/portfolio" && PORTFOLIO_LOCKED ? (
+                      <Lock className="h-3.5 w-3.5 opacity-70" aria-hidden />
+                    ) : null}
+                  </Link>
                 </li>
               ))}
             </ul>

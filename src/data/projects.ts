@@ -6,6 +6,11 @@ export type ProjectCategory =
   | "Academic"
   | "Personal";
 
+export type PortfolioCollection = "systems" | "websites" | "videography";
+
+/** Flip to false when the public portfolio page should show projects. */
+export const PORTFOLIO_LOCKED = true;
+
 export interface Project {
   id: string;
   title: string;
@@ -13,6 +18,7 @@ export interface Project {
   problem: string;
   technologies: string[];
   category: ProjectCategory;
+  collection: PortfolioCollection;
   image?: string;
   github?: string;
   demo?: string;
@@ -21,6 +27,30 @@ export interface Project {
   /** Set true for placeholder entries you will replace later */
   placeholder?: boolean;
 }
+
+export const portfolioTabs: Array<{
+  id: PortfolioCollection;
+  label: string;
+  locked?: boolean;
+  empty: string;
+}> = [
+  {
+    id: "systems",
+    label: "Systems I created",
+    empty: "No systems listed yet.",
+  },
+  {
+    id: "websites",
+    label: "Websites I created",
+    empty: "No websites listed yet.",
+  },
+  {
+    id: "videography",
+    label: "Videography",
+    locked: true,
+    empty: "Videography work is coming soon.",
+  },
+];
 
 /**
  * Projects listed here are based on systems built during professional experience.
@@ -36,6 +66,7 @@ export const projects: Project[] = [
       "Helps organisations digitise scanning workflows instead of relying on slow, manual handling.",
     technologies: ["C#", ".NET", "SQL", "Firebird", "JavaScript"],
     category: "Software",
+    collection: "systems",
     image: "/projects/scanning.png",
     demo: "https://escan.oneclickclouds.com",
   },
@@ -48,6 +79,7 @@ export const projects: Project[] = [
       "Reduces scheduling friction by centralising booking, availability, and related workflow steps.",
     technologies: ["C#", ".NET", "HTML", "CSS", "JavaScript", "SQL"],
     category: "Web",
+    collection: "websites",
     image: "/projects/appointment.png",
     demo: "https://ebooking.oneclickclouds.com",
   },
@@ -60,6 +92,7 @@ export const projects: Project[] = [
       "Makes quotation handling more consistent by connecting quote workflows with existing business systems.",
     technologies: ["C#", ".NET", "SQL", "Firebird", "SQL Account ERP"],
     category: "Software",
+    collection: "systems",
     image: "/projects/quote.png",
     demo: "https://equotehub.oneclickclouds.com",
   },
@@ -72,6 +105,7 @@ export const projects: Project[] = [
       "Helps teams approve requests more consistently instead of chasing approvals through informal channels.",
     technologies: ["C#", ".NET", "SQL", "Firebird", "SQL Account ERP"],
     category: "Software",
+    collection: "systems",
     image: "/projects/approval.png",
     demo: "https://eapproval.oneclickclouds.com",
   },
@@ -84,6 +118,7 @@ export const projects: Project[] = [
       "Removes repetitive manual reporting by delivering timely updates on a schedule.",
     technologies: ["C#", ".NET", "Windows Services", "SQL"],
     category: "Automation",
+    collection: "systems",
     image: "/projects/emailing.png",
     note: "Backend service with no public live demo (code/service only).",
   },
@@ -96,17 +131,9 @@ export const projects: Project[] = [
       "Useful for stitching tools together quickly when a full custom service is not required yet.",
     technologies: ["n8n", "Webhooks", "API integration", "Automation"],
     category: "Automation",
+    collection: "systems",
     image: "/projects/n8n.png",
     note: "Learning / practice work. Add a workflow screenshot or public demo URL when ready.",
   },
 ];
 
-export const projectCategories: Array<ProjectCategory | "All"> = [
-  "All",
-  "Software",
-  "Web",
-  "Automation",
-  "AI",
-  "Academic",
-  "Personal",
-];

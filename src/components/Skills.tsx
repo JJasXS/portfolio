@@ -264,7 +264,7 @@ export function Skills() {
                                 project.demo &&
                                 !isPlaceholderLink(project.demo)
                                   ? project.demo
-                                  : "#projects"
+                                  : "/portfolio"
                               }
                               target={
                                 project.demo &&

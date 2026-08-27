@@ -90,6 +90,9 @@ export function downloadCardImage(filename = "Jason-Choo-Card.png") {
   if (!isPlaceholderLink(personalInfo.linkedin)) {
     rows.push(["LinkedIn", "linkedin.com/in/jason-choo-7a871228a"]);
   }
+  if (!isPlaceholderLink(personalInfo.github)) {
+    rows.push(["GitHub", `github.com/${personalInfo.githubHandle}`]);
+  }
   if (!isPlaceholderLink(personalInfo.instagram)) {
     rows.push(["Instagram", personalInfo.instagramHandle]);
   }

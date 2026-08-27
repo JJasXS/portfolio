@@ -171,7 +171,7 @@ export function Journey() {
         />
       </FadeIn>
 
-      <FadeIn delay={0.08} className="mx-auto mt-10 max-w-3xl">
+      <FadeIn delay={0.08} className="mx-auto mt-10 max-w-4xl">
         <div className="overflow-hidden rounded-2xl border border-border bg-[#0b1118] shadow-[0_18px_50px_-28px_rgba(45,212,191,0.28)]">
           <div className="flex items-center gap-3 border-b border-white/10 px-4 py-2.5">
             <div className="flex gap-1.5" aria-hidden>

@@ -1,7 +1,8 @@
 "use client";
 
-import { ArrowDown, ArrowRight } from "lucide-react";
+import { ArrowDown, ArrowRight, Lock } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
+import Link from "next/link";
 import { personalInfo } from "@/data/personal";
 import { ProfilePhoto } from "./ProfilePhoto";
 import { SocialIcons } from "./SocialIcons";
@@ -17,13 +18,13 @@ export function Hero() {
   return (
     <section
       id="home"
-      className="relative overflow-hidden px-4 pb-16 pt-28 sm:px-6 sm:pt-32 lg:px-8 lg:pb-24 lg:pt-36"
+      className="relative overflow-hidden px-4 pb-16 pt-28 sm:px-6 sm:pt-32 lg:px-10 xl:px-14 lg:pb-24 lg:pt-36"
     >
       <div className="pointer-events-none absolute inset-0 bg-grid" />
       <div className="glow-orb left-[-10%] top-20 h-72 w-72" />
       <div className="glow-orb bottom-10 right-[-5%] h-80 w-80 opacity-70" />
 
-      <div className="relative mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1.15fr_0.85fr]">
+      <div className="relative mx-auto grid max-w-[1600px] items-center gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:gap-16 xl:gap-20">
         <div>
           <motion.p
             initial={reduce ? false : { opacity: 0, y: 12 }}
@@ -75,13 +76,13 @@ export function Hero() {
               View My Journey
               <ArrowRight className="h-4 w-4" />
             </button>
-            <button
-              type="button"
-              onClick={() => scrollTo("#projects")}
+            <Link
+              href="/portfolio"
               className="inline-flex items-center gap-2 rounded-xl border border-border bg-surface px-5 py-3 text-sm font-medium text-foreground transition hover:border-accent/40 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             >
               View My Projects
-            </button>
+              <Lock className="h-3.5 w-3.5 opacity-70" aria-hidden />
+            </Link>
           </motion.div>
 
           <motion.div
@@ -98,12 +99,12 @@ export function Hero() {
           initial={reduce ? false : { opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.55, delay: 0.15 }}
-          className="relative mx-auto w-full max-w-[280px] pb-2 sm:max-w-[320px] lg:ml-auto lg:mr-0 lg:max-w-[340px]"
+          className="relative mx-auto w-full max-w-[300px] pb-2 sm:max-w-[340px] lg:ml-auto lg:mr-0 lg:max-w-[400px] xl:max-w-[440px]"
         >
           <ProfilePhoto
             priority
             className="w-full"
-            sizes="(max-width: 1024px) 280px, 340px"
+            sizes="(max-width: 1024px) 340px, (max-width: 1536px) 400px, 440px"
           />
 
           <div className="absolute inset-x-3 bottom-3 z-20 sm:inset-x-3.5 sm:bottom-3.5">

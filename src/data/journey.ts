@@ -74,7 +74,6 @@ export const journey: JourneyGroup[] = [
         description:
           "Pursuing a bachelor's degree focused on software engineering principles, system design, and practical application development.",
         type: "education",
-        highlight: "CGPA 3.0",
       },
     ],
   },

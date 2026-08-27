@@ -5,7 +5,7 @@ import type { ComponentType } from "react";
 import { personalInfo } from "@/data/personal";
 import { isPlaceholderLink } from "@/lib/utils";
 import { downloadCardImage } from "@/lib/cardImage";
-import { InstagramIcon, LinkedInIcon } from "./icons";
+import { GitHubIcon, InstagramIcon, LinkedInIcon } from "./icons";
 
 function ContactLine({
   label,
@@ -119,6 +119,11 @@ export function DigitalCardPanel({ className = "" }: { className?: string }) {
           label="LinkedIn"
           href={personalInfo.linkedin}
           icon={LinkedInIcon}
+        />
+        <SocialLink
+          label={personalInfo.githubHandle}
+          href={personalInfo.github}
+          icon={GitHubIcon}
         />
         <SocialLink
           label={personalInfo.instagramHandle}
