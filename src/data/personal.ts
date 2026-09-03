@@ -17,7 +17,9 @@ export const personalInfo = {
   /** Canonical site URL for SEO */
   siteUrl: "https://jschoo.com",
   /** Profile photo under /public */
-  profileImage: "/profile/profile_picture.jpg",
+  profileImage: "/profile/jason.jpg",
+  /** Downloadable resume under /public */
+  resumeFile: "/resume/Jason-Choo-Resume.pdf",
   company: "Procc System Consulting",
   shortIntro:
     "I'm a software engineering graduate passionate about building practical software, learning new technologies, and turning ideas into useful solutions.",
@@ -67,6 +69,7 @@ export const socialLinks = [
 export const navLinks = [
   { href: "/#home", label: "Home" },
   { href: "/#about", label: "About" },
+  { href: "/#resume", label: "Resume" },
   { href: "/#journey", label: "Journey" },
   { href: "/#skills", label: "Skills" },
   { href: "/portfolio", label: "Portfolio" },

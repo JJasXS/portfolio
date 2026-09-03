@@ -9,6 +9,7 @@ import { Journey } from "@/components/Journey";
 import { Learning } from "@/components/Learning";
 import { Navbar } from "@/components/Navbar";
 import { ProjectsPreview } from "@/components/Projects";
+import { Resume } from "@/components/Resume";
 import { Skills } from "@/components/Skills";
 
 export default function HomePage() {
@@ -24,6 +25,7 @@ export default function HomePage() {
       <main id="main">
         <Hero />
         <About />
+        <Resume />
         <Journey />
         <Skills />
         <Learning />
