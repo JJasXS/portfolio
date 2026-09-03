@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Jason Choo Jie Sern - Resume</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 12mm 13mm;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 8.9pt;
+        line-height: 1.34;
+        color: #222;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      /* Mirror the print page when previewing in a browser */
+      @media screen {
+        html {
+          background: #f1f3f5;
+        }
+
+        body {
+          width: 210mm;
+          min-height: 297mm;
+          margin: 0 auto;
+          padding: 12mm 13mm;
+          background: #fff;
+        }
+      }
+
+      /* Header: portrait on the left, identity on the right */
+      .masthead {
+        display: flex;
+        align-items: center;
+        gap: 6mm;
+      }
+
+      .portrait {
+        width: 25mm;
+        aspect-ratio: 4 / 5;
+        flex: 0 0 auto;
+        object-fit: cover;
+        object-position: center 18%;
+        border-radius: 2.5mm;
+      }
+
+      .identity {
+        min-width: 0;
+      }
+
+      h1 {
+        margin: 0;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 25pt;
+        font-weight: 400;
+        line-height: 1.05;
+        color: #111;
+      }
+
+      .role {
+        margin: 1.5mm 0 0;
+        font-size: 10.5pt;
+        font-weight: 600;
+        color: #222;
+      }
+
+      .contact {
+        margin: 2mm 0 0;
+        font-size: 8.6pt;
+        color: #333;
+      }
+
+      .contact span + span::before {
+        content: "·";
+        margin: 0 2.2mm;
+        color: #aaa;
+      }
+
+      .rule {
+        margin: 4mm 0 0;
+        border: 0;
+        border-top: 1px solid #d8d8d8;
+      }
+
+      h2 {
+        margin: 4.5mm 0 2mm;
+        font-size: 8.4pt;
+        font-weight: 700;
+        letter-spacing: 0.26em;
+        text-transform: uppercase;
+        color: #111;
+      }
+
+      .summary {
+        margin: 0;
+      }
+
+      .entry {
+        margin-top: 2.6mm;
+      }
+
+      .entry:first-of-type {
+        margin-top: 0;
+      }
+
+      .entry-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 4mm;
+      }
+
+      .entry-title {
+        font-size: 9.6pt;
+        font-weight: 700;
+        color: #111;
+      }
+
+      .entry-dates {
+        flex: 0 0 auto;
+        font-size: 8.8pt;
+        color: #555;
+      }
+
+      .entry-org {
+        margin: 0.4mm 0 0;
+        font-size: 8.8pt;
+        color: #444;
+      }
+
+      .entry-org em {
+        color: #666;
+      }
+
+      ul {
+        margin: 1.4mm 0 0;
+        padding-left: 4.2mm;
+      }
+
+      li {
+        margin-top: 0.9mm;
+      }
+
+      li::marker {
+        color: #999;
+      }
+
+      .skills p {
+        margin: 0 0 1.2mm;
+      }
+
+      .skills strong {
+        color: #111;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="masthead">
+      <img class="portrait" src="../public/profile/jason.jpg" alt="Jason Choo Jie Sern" />
+      <div class="identity">
+        <h1>Jason Choo Jie Sern</h1>
+        <p class="role">Software Engineer</p>
+        <p class="contact">
+          <span>jason.choo2004@gmail.com</span>
+          <span>Penang, Malaysia</span>
+          <span>github.com/JJasXS</span>
+          <span>LinkedIn</span>
+        </p>
+      </div>
+    </header>
+    <hr class="rule" />
+
+    <h2>Summary</h2>
+    <p class="summary">
+      Software Engineer building practical business systems with C#/.NET,
+      Python, and SQL, including SQL Account ERP integrations. Thrilled to learn
+      and explore new things while shipping reliable apps and supporting
+      deployment in a strong engineering team.
+    </p>
+
+    <h2>Experience</h2>
+    <div class="entry">
+      <div class="entry-head">
+        <span class="entry-title">Software Engineer</span>
+        <span class="entry-dates">Feb 2026 - Present (7 mo)</span>
+      </div>
+      <p class="entry-org">
+        Procc System Consulting ·
+        <em>Intern Feb-Jun 2026, converted to full-time</em>
+      </p>
+      <ul>
+        <li>
+          Own and enhance production business systems (ProAcc eScan, Appointment
+          Booking, eApproval, eQuote Hub, Auto Emailing) built with C#/.NET,
+          Python, HTML/CSS, and JavaScript.
+        </li>
+        <li>
+          Connect custom apps to SQL Account ERP so quotation, procurement,
+          approval, stock, customer, and invoice workflows run as one connected
+          process.
+        </li>
+        <li>
+          Built ProAcc eScan (ASP.NET Core + Firebird) for real-time stock
+          validation and location / project / last-scan updates; delivered PO/SO
+          approval and goods-received flows with role-based access.
+        </li>
+        <li>
+          Launched a procurement and quotation portal (Flask + FastAPI) with
+          bidding screens and live SQL Account API integration.
+        </li>
+        <li>
+          Design Windows Services that auto-generate and send scheduled
+          Excel/PDF reports from Firebird data via SMTP; ship releases end to
+          end including test, deploy, and user support.
+        </li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head">
+        <span class="entry-title">Junior Software Engineer</span>
+        <span class="entry-dates">2021 - 2022 (12 mo)</span>
+      </div>
+      <p class="entry-org">Penang Hill Corp</p>
+      <ul>
+        <li>
+          Collaborated with a senior engineer to develop an internal meeting
+          room booking system.
+        </li>
+        <li>
+          Supported development, content updates, and day-to-day improvements
+          for internal workflows.
+        </li>
+        <li>
+          Worked with GitHub and Visual Studio Code as part of the team
+          toolchain.
+        </li>
+      </ul>
+    </div>
+
+    <h2>Education</h2>
+    <div class="entry">
+      <div class="entry-head">
+        <span class="entry-title">Bachelor of Software Engineering</span>
+        <span class="entry-dates">2024 - 2026</span>
+      </div>
+      <p class="entry-org">TAR UMT, Penang Branch · CGPA 3.0</p>
+    </div>
+    <div class="entry">
+      <div class="entry-head">
+        <span class="entry-title">Diploma in Information Technology</span>
+        <span class="entry-dates">2021 - 2023</span>
+      </div>
+      <p class="entry-org">TAR UMT, Penang Branch · CGPA 3.3</p>
+    </div>
+
+    <h2>Skills</h2>
+    <div class="skills">
+      <p>
+        <strong>Core stack:</strong> C#/.NET, Python, SQL, JavaScript, HTML,
+        CSS, Firebird, MSSQL, SQL Account ERP, Git
+      </p>
+      <p>
+        <strong>Focus:</strong> Business applications, ERP integration, database
+        management, Windows Services, SDLC, deployment &amp; support
+      </p>
+      <p>
+        <strong>Soft skills:</strong> Teamwork, communication, problem-solving,
+        time management
+      </p>
+      <p><strong>Languages:</strong> English, Bahasa Melayu, Mandarin</p>
+    </div>
+
+    <h2>Activities</h2>
+    <div class="entry">
+      <div class="entry-head">
+        <span class="entry-title">Vice President Community</span>
+        <span class="entry-dates">Present</span>
+      </div>
+      <p class="entry-org">
+        Junior Chamber International (JCI) United Penang
+      </p>
+      <ul>
+        <li>
+          Serve as Vice President Community and 2026 Commission Director;
+          support member leadership and outreach.
+        </li>
+        <li>
+          Organising Chairman for Care for Every Family (with JCI Nibong Tebal),
+          supporting families in need.
+        </li>
+        <li>
+          Debated with team Urban Philosopher at the 2026 JCI Malaysia Area
+          North Convention.
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>
