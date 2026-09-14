@@ -6,15 +6,10 @@ export const personalInfo = {
   tagline: "Software Engineer | Builder | Technology Enthusiast",
   location: "Penang, Malaysia",
   email: "jason.choo2004@gmail.com",
-  phone: "XXX-XXX XXXX",
   linkedin: "https://www.linkedin.com/in/jason-choo-7a871228a/",
   github: "https://github.com/JJasXS",
-  githubHandle: "JJasXS",
   instagram: "https://www.instagram.com/jasch_04/",
-  instagramHandle: "@jasch_04",
-  /** Live website URL */
-  website: "https://jschoo.com",
-  /** Canonical site URL for SEO */
+  /** Canonical site URL for SEO and share assets */
   siteUrl: "https://jschoo.com",
   /** Profile photo under /public */
   profileImage: "/profile/jason.jpg",

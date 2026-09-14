@@ -1,7 +1,6 @@
-"use client";
-
 import Image from "next/image";
 import { personalInfo } from "@/data/personal";
+import { PROFILE_FACE_CROP } from "@/lib/cardIdentity";
 
 type ProfilePhotoProps = {
   className?: string;
@@ -20,7 +19,6 @@ export function ProfilePhoto({
 }: ProfilePhotoProps) {
   return (
     <div className={`relative ${className}`}>
-      {/* Outer HUD brackets */}
       <div className="pointer-events-none absolute -inset-1.5 z-10" aria-hidden>
         <span className="absolute left-0 top-0 h-4 w-4 border-l border-t border-accent/55 sm:h-5 sm:w-5" />
         <span className="absolute right-0 top-0 h-4 w-4 border-r border-t border-accent/55 sm:h-5 sm:w-5" />
@@ -35,14 +33,12 @@ export function ProfilePhoto({
             alt={`${personalInfo.fullName} profile photo`}
             fill
             priority={priority}
-            className="object-cover object-[center_18%]"
+            className={`object-cover ${PROFILE_FACE_CROP.objectPositionClass}`}
             sizes={sizes}
           />
 
-          {/* Faint HUD grid */}
           <div className="profile-scan-grid pointer-events-none absolute inset-0" aria-hidden />
 
-          {/* Tiny static particles */}
           <div className="pointer-events-none absolute inset-0" aria-hidden>
             <span className="absolute left-[12%] top-[18%] h-0.5 w-0.5 rounded-full bg-accent/50" />
             <span className="absolute right-[16%] top-[28%] h-0.5 w-0.5 rounded-full bg-accent/35" />
@@ -51,12 +47,10 @@ export function ProfilePhoto({
             <span className="absolute left-[48%] top-[12%] h-0.5 w-0.5 rounded-full bg-accent/25" />
           </div>
 
-          {/* Horizontal neon scan beam */}
           <div className="profile-scan-beam pointer-events-none absolute inset-x-0 z-[2]" aria-hidden>
             <div className="profile-scan-beam-core mx-auto h-px w-full" />
           </div>
 
-          {/* Bottom arrival pulse */}
           <div className="profile-scan-pulse pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-16" aria-hidden />
         </div>
       </div>

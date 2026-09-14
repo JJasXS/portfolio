@@ -7,6 +7,7 @@ import {
   projects,
   type PortfolioCollection,
 } from "@/data/projects";
+import { LockedPanel } from "./LockedPanel";
 import { ProjectGrid } from "./Projects";
 
 export function PortfolioTabs() {
@@ -49,15 +50,10 @@ export function PortfolioTabs() {
 
       <div className="mt-10" role="tabpanel" aria-label={tab.label}>
         {tab.locked ? (
-          <div className="flex min-h-[280px] flex-col items-center justify-center rounded-3xl border border-dashed border-border bg-surface/40 px-6 py-16 text-center">
-            <Lock className="h-8 w-8 text-muted" aria-hidden />
-            <p className="mt-4 text-lg font-semibold text-foreground">
-              Videography is locked
-            </p>
-            <p className="mt-2 max-w-md text-sm leading-relaxed text-muted">
-              {tab.empty} This section will open when the work is ready to share.
-            </p>
-          </div>
+          <LockedPanel
+            title="Videography is locked"
+            description={`${tab.empty} This section will open when the work is ready to share.`}
+          />
         ) : items.length ? (
           <ProjectGrid items={items} />
         ) : (

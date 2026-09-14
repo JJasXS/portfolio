@@ -1,10 +1,16 @@
 import { personalInfo } from "@/data/personal";
+import {
+  PROFILE_FACE_CROP,
+  cardContactRows,
+  cardDownloadFilename,
+  cardInitials,
+} from "@/lib/cardIdentity";
 
 /**
  * Full digital business-card PNG (standard landscape proportion).
  * The canvas IS the card — ready to save / share.
  */
-export function downloadCardImage(filename = "Jason-Choo-Card.png") {
+export function downloadCardImage(filename = cardDownloadFilename) {
   // ~ standard business card ratio (3.5 × 2)
   const width = 1050;
   const height = 600;
@@ -14,9 +20,6 @@ export function downloadCardImage(filename = "Jason-Choo-Card.png") {
 
   const ctx = canvas.getContext("2d");
   if (!ctx) return;
-
-  const initials = `${personalInfo.firstName.slice(0, 1)}${personalInfo.lastName.slice(0, 1)}`;
-  const websiteHost = personalInfo.website.replace(/^https?:\/\//, "");
 
   const finish = () => {
     canvas.toBlob((blob) => {
@@ -57,12 +60,11 @@ export function downloadCardImage(filename = "Jason-Choo-Card.png") {
       ctx.rect(photoX, photoY, photoW, photoH);
       ctx.clip();
 
-      // Cover-fit crop, slight top bias for face
       const scale = Math.max(photoW / photo.width, photoH / photo.height);
       const sw = photoW / scale;
       const sh = photoH / scale;
       const sx = (photo.width - sw) / 2;
-      const sy = Math.max(0, (photo.height - sh) * 0.12);
+      const sy = Math.max(0, (photo.height - sh) * PROFILE_FACE_CROP.canvasYBias);
       ctx.drawImage(photo, sx, sy, sw, sh, photoX, photoY, photoW, photoH);
       ctx.restore();
 
@@ -80,7 +82,7 @@ export function downloadCardImage(filename = "Jason-Choo-Card.png") {
       ctx.font = "600 48px Geist, Inter, Arial, sans-serif";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
-      ctx.fillText(initials, photoX + photoW / 2, photoY + photoH / 2);
+      ctx.fillText(cardInitials, photoX + photoW / 2, photoY + photoH / 2);
     }
 
     // Right content
@@ -103,15 +105,8 @@ export function downloadCardImage(filename = "Jason-Choo-Card.png") {
     ctx.font = "400 20px Geist, Inter, Arial, sans-serif";
     ctx.fillText(personalInfo.company, x, y + 68);
 
-    // Contact block
-    const rows: Array<[string, string]> = [
-      ["Email", personalInfo.email],
-      ["Web", websiteHost],
-      ["Based", personalInfo.location],
-    ];
-
     let rowY = y + 130;
-    for (const [label, value] of rows) {
+    for (const { label, value } of cardContactRows) {
       ctx.fillStyle = "#64748b";
       ctx.font = "500 15px Geist, Inter, Arial, sans-serif";
       ctx.fillText(label.toUpperCase(), x, rowY);
@@ -122,7 +117,6 @@ export function downloadCardImage(filename = "Jason-Choo-Card.png") {
       rowY += 72;
     }
 
-    // Bottom brand line
     ctx.fillStyle = "#475569";
     ctx.font = "400 15px Geist, Inter, Arial, sans-serif";
     ctx.fillText("Digital name card", x, height - 36);

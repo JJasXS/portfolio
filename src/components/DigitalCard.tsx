@@ -4,19 +4,21 @@ import { Download, Mail, MapPin } from "lucide-react";
 import Image from "next/image";
 import { personalInfo } from "@/data/personal";
 import { downloadCardImage } from "@/lib/cardImage";
+import {
+  PROFILE_FACE_CROP,
+  cardContactRows,
+  cardMailto,
+} from "@/lib/cardIdentity";
 
 /** Compact card panel for embedding beside Contact. */
 export function DigitalCardPanel({ className = "" }: { className?: string }) {
-  const handleDownload = () => {
-    downloadCardImage();
-  };
+  const emailRow = cardContactRows[0];
 
   return (
     <article
       className={`overflow-hidden rounded-3xl border border-border bg-surface ${className}`}
     >
       <div className="flex flex-col sm:flex-row">
-        {/* Profile column */}
         <div className="relative flex flex-col items-center justify-center gap-3 border-b border-border bg-surface-soft/40 px-5 py-6 text-center sm:w-[38%] sm:border-b-0 sm:border-r sm:px-5 sm:py-7">
           <span
             className="absolute inset-y-0 left-0 w-1 bg-accent sm:block"
@@ -27,7 +29,7 @@ export function DigitalCardPanel({ className = "" }: { className?: string }) {
               src={personalInfo.profileImage}
               alt={`${personalInfo.fullName} profile photo`}
               fill
-              className="object-cover object-[center_18%]"
+              className={`object-cover ${PROFILE_FACE_CROP.objectPositionClass}`}
               sizes="112px"
             />
           </div>
@@ -43,19 +45,18 @@ export function DigitalCardPanel({ className = "" }: { className?: string }) {
           </div>
         </div>
 
-        {/* Details column */}
         <div className="flex flex-1 flex-col justify-center gap-6 px-5 py-5 sm:px-6 sm:py-6">
           <dl>
             <div className="flex flex-col gap-1">
               <dt className="text-xs uppercase tracking-wide text-muted">
-                Email
+                {emailRow.label}
               </dt>
               <dd className="min-w-0">
                 <a
-                  href={`mailto:${personalInfo.email}`}
+                  href={cardMailto}
                   className="break-all text-sm text-foreground underline-offset-4 transition hover:text-accent hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent sm:text-base"
                 >
-                  {personalInfo.email}
+                  {emailRow.value}
                 </a>
               </dd>
             </div>
@@ -64,17 +65,17 @@ export function DigitalCardPanel({ className = "" }: { className?: string }) {
           <div className="flex flex-wrap gap-2">
             <button
               type="button"
-              onClick={handleDownload}
+              onClick={() => downloadCardImage()}
               className="inline-flex items-center gap-2 rounded-xl bg-foreground px-3.5 py-2.5 text-sm font-medium text-background transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             >
-              <Download className="h-4 w-4" />
+              <Download className="h-4 w-4" aria-hidden="true" />
               Download Card
             </button>
             <a
-              href={`mailto:${personalInfo.email}`}
+              href={cardMailto}
               className="inline-flex items-center gap-2 rounded-xl border border-border px-3.5 py-2.5 text-sm font-medium text-foreground transition hover:border-accent/40 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             >
-              <Mail className="h-4 w-4" />
+              <Mail className="h-4 w-4" aria-hidden="true" />
               Email me
             </a>
           </div>

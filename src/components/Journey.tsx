@@ -1,6 +1,3 @@
-"use client";
-
-import { useMemo } from "react";
 import {
   journey,
   type JourneyNestedSub,
@@ -63,6 +60,8 @@ function buildEntries(): JourneyEntry[] {
   }));
 }
 
+const journeyEntries = buildEntries();
+
 function JourneyRow({
   entry,
   isLast,
@@ -70,7 +69,7 @@ function JourneyRow({
   entry: JourneyEntry;
   isLast: boolean;
 }) {
-  const hasSubs = Boolean(entry.subs?.length);
+  const subs = entry.subs;
 
   return (
     <li className="group relative grid gap-3 sm:grid-cols-[7.5rem_minmax(0,1fr)] sm:gap-x-6">
@@ -135,9 +134,9 @@ function JourneyRow({
             </p>
           ) : null}
 
-          {hasSubs ? (
+          {subs?.length ? (
             <ul className="mt-3 space-y-2 border-l border-border pl-3 sm:pl-4">
-              {entry.subs!.map((sub) => (
+              {subs.map((sub) => (
                 <li key={sub.id} className="min-w-0">
                   <div className="flex flex-col gap-0.5 sm:flex-row sm:items-baseline sm:gap-3">
                     <time className="shrink-0 font-mono text-[11px] tracking-wide text-muted sm:w-[6.5rem]">
@@ -163,8 +162,6 @@ function JourneyRow({
 }
 
 export function Journey() {
-  const entries = useMemo(() => buildEntries(), []);
-
   return (
     <SectionShell id="journey" className="!pb-10 lg:!pb-14">
       <FadeIn>
@@ -177,11 +174,11 @@ export function Journey() {
 
       <FadeIn delay={0.08} className="mx-auto mt-10 max-w-4xl">
         <ol className="space-y-1">
-          {entries.map((entry, index) => (
+          {journeyEntries.map((entry, index) => (
             <JourneyRow
               key={entry.id}
               entry={entry}
-              isLast={index === entries.length - 1}
+              isLast={index === journeyEntries.length - 1}
             />
           ))}
         </ol>

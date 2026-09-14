@@ -4,10 +4,10 @@ import { Html, Line, OrbitControls } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Minus, Plus, RotateCcw } from "lucide-react";
 import {
-  useEffect,
   useMemo,
   useRef,
   useState,
+  useSyncExternalStore,
   type MutableRefObject,
   type ReactNode,
 } from "react";
@@ -395,14 +395,14 @@ export function SkillSphere({
   hoverCard,
 }: SkillSphereProps) {
   const { resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  );
   const controlsRef = useRef<OrbitControlsImpl | null>(null);
   const [dragging, setDragging] = useState(false);
   const [distance, setDistance] = useState(DEFAULT_DISTANCE);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const isDark = !mounted || resolvedTheme !== "light";
   const sceneBg = isDark ? SCENE_BG.dark : SCENE_BG.light;

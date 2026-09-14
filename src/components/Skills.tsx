@@ -15,6 +15,7 @@ import { isPlaceholderLink } from "@/lib/utils";
 import { FadeIn } from "./FadeIn";
 import { SkillLogo } from "./SkillLogo";
 import { SkillSphere } from "./SkillSphere";
+import { SectionHeading } from "./Section";
 
 function getRelatedProjects(skill: ConstellationSkill) {
   return projects.filter((project) => skill.projects.includes(project.id));
@@ -91,18 +92,12 @@ export function Skills() {
 
       <div className="relative mx-auto w-full min-w-0 max-w-[1600px]">
         <FadeIn>
-          <div className="mx-auto max-w-2xl text-center">
-            <p className="text-sm font-medium tracking-wide text-accent">
-              Signature feature
-            </p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-              My Skill Constellation
-            </h2>
-            <p className="mt-4 text-base leading-relaxed text-muted">
-              A collection of technologies I&apos;ve explored, learned, and used
-              to build things.
-            </p>
-          </div>
+          <SectionHeading
+            align="center"
+            eyebrow="Signature feature"
+            title="My Skill Constellation"
+            description="A collection of technologies I've explored, learned, and used to build things."
+          />
         </FadeIn>
 
         <FadeIn delay={0.06} className="mt-8">

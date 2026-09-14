@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { MessageCircle } from "lucide-react";
 import { useReducedMotion } from "framer-motion";
 
@@ -7,7 +8,7 @@ export function FloatingContact() {
   const reduce = useReducedMotion();
 
   return (
-    <a
+    <Link
       href="/#contact"
       onClick={(e) => {
         const el = document.querySelector("#contact");
@@ -21,6 +22,6 @@ export function FloatingContact() {
     >
       <MessageCircle className="h-4 w-4 text-accent" aria-hidden="true" />
       Let&apos;s Talk
-    </a>
+    </Link>
   );
 }

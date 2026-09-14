@@ -131,7 +131,7 @@ export function Hero() {
                   Currently
                 </p>
                 <p className="font-mono text-[9px] tracking-wide text-slate-400">
-                  Penang
+                  {personalInfo.location.split(",")[0]}
                 </p>
               </div>
               <p className="mt-1 text-[13px] font-semibold tracking-tight text-slate-50">
