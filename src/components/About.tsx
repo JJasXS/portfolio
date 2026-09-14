@@ -12,13 +12,9 @@ export function About() {
         </FadeIn>
 
         <FadeIn delay={0.1} className="order-1 min-w-0 lg:order-2">
-          <SectionHeading
-            eyebrow="About"
-            title="A little about me"
-            description={personalInfo.about[0]}
-          />
-          <div className="mt-6 space-y-4 text-base leading-relaxed text-muted">
-            {personalInfo.about.slice(1).map((paragraph) => (
+          <SectionHeading eyebrow="About" title="A little about me" />
+          <div className="mt-4 max-w-2xl space-y-4 text-justify text-base leading-relaxed text-muted sm:text-lg">
+            {personalInfo.about.map((paragraph) => (
               <p key={paragraph}>{paragraph}</p>
             ))}
           </div>

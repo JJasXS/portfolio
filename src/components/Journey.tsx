@@ -1,6 +1,5 @@
 "use client";
 
-import { Rocket } from "lucide-react";
 import { useMemo } from "react";
 import {
   journey,
@@ -50,7 +49,7 @@ function buildEntries(): JourneyEntry[] {
     }
   }
 
-  return flat.map((item, index) => ({
+  return flat.map((item) => ({
     id: item.id,
     type: item.type,
     title: item.title,
@@ -60,7 +59,7 @@ function buildEntries(): JourneyEntry[] {
     highlight: item.highlight,
     status: item.status,
     subs: item.subs,
-    isHead: index === 0,
+    isHead: item.status === "Present",
   }));
 }
 
@@ -167,7 +166,7 @@ export function Journey() {
   const entries = useMemo(() => buildEntries(), []);
 
   return (
-    <SectionShell id="journey">
+    <SectionShell id="journey" className="!pb-10 lg:!pb-14">
       <FadeIn>
         <SectionHeading
           eyebrow="Story so far"
@@ -186,11 +185,6 @@ export function Journey() {
             />
           ))}
         </ol>
-
-        <div className="mt-8 inline-flex items-center gap-2 text-sm text-muted">
-          <Rocket className="h-4 w-4 text-accent" aria-hidden="true" />
-          Next: building, shipping, and growing as an engineer
-        </div>
       </FadeIn>
     </SectionShell>
   );

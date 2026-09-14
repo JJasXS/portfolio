@@ -1,13 +1,13 @@
 import { personalInfo } from "@/data/personal";
-import { isPlaceholderLink } from "@/lib/utils";
 
 /**
- * Draws a shareable digital name card as a PNG image
- * so recipients can save it to Photos / Camera Roll.
+ * Full digital business-card PNG (standard landscape proportion).
+ * The canvas IS the card — ready to save / share.
  */
 export function downloadCardImage(filename = "Jason-Choo-Card.png") {
-  const width = 1200;
-  const height = 720;
+  // ~ standard business card ratio (3.5 × 2)
+  const width = 1050;
+  const height = 600;
   const canvas = document.createElement("canvas");
   canvas.width = width;
   canvas.height = height;
@@ -15,132 +15,150 @@ export function downloadCardImage(filename = "Jason-Choo-Card.png") {
   const ctx = canvas.getContext("2d");
   if (!ctx) return;
 
-  // Background
-  ctx.fillStyle = "#0b1220";
-  ctx.fillRect(0, 0, width, height);
-
-  // Soft accent glow
-  const glow = ctx.createRadialGradient(180, 120, 20, 180, 120, 420);
-  glow.addColorStop(0, "rgba(45, 212, 191, 0.28)");
-  glow.addColorStop(1, "rgba(45, 212, 191, 0)");
-  ctx.fillStyle = glow;
-  ctx.fillRect(0, 0, width, height);
-
-  const glow2 = ctx.createRadialGradient(980, 560, 20, 980, 560, 380);
-  glow2.addColorStop(0, "rgba(56, 189, 248, 0.18)");
-  glow2.addColorStop(1, "rgba(56, 189, 248, 0)");
-  ctx.fillStyle = glow2;
-  ctx.fillRect(0, 0, width, height);
-
-  // Card panel
-  roundRect(ctx, 48, 48, width - 96, height - 96, 28);
-  ctx.fillStyle = "rgba(15, 23, 42, 0.88)";
-  ctx.fill();
-  ctx.strokeStyle = "rgba(148, 163, 184, 0.28)";
-  ctx.lineWidth = 2;
-  ctx.stroke();
-
-  // Accent bar
-  ctx.fillStyle = "#2dd4bf";
-  ctx.fillRect(48, 48, 10, height - 96);
-
-  // Initials circle
-  ctx.beginPath();
-  ctx.arc(160, 180, 52, 0, Math.PI * 2);
-  ctx.fillStyle = "rgba(45, 212, 191, 0.12)";
-  ctx.fill();
-  ctx.strokeStyle = "rgba(45, 212, 191, 0.55)";
-  ctx.lineWidth = 2;
-  ctx.stroke();
-
   const initials = `${personalInfo.firstName.slice(0, 1)}${personalInfo.lastName.slice(0, 1)}`;
-  ctx.fillStyle = "#2dd4bf";
-  ctx.font = "600 34px Geist, Inter, Arial, sans-serif";
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-  ctx.fillText(initials, 160, 182);
+  const websiteHost = personalInfo.website.replace(/^https?:\/\//, "");
 
-  // Name & role
-  ctx.textAlign = "left";
-  ctx.textBaseline = "alphabetic";
-  ctx.fillStyle = "#f8fafc";
-  ctx.font = "600 54px Geist, Inter, Arial, sans-serif";
-  ctx.fillText(personalInfo.fullName, 250, 170);
+  const finish = () => {
+    canvas.toBlob((blob) => {
+      if (!blob) return;
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement("a");
+      anchor.href = url;
+      anchor.download = filename;
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+      URL.revokeObjectURL(url);
+    }, "image/png");
+  };
 
-  ctx.fillStyle = "#94a3b8";
-  ctx.font = "400 28px Geist, Inter, Arial, sans-serif";
-  ctx.fillText(personalInfo.role, 250, 220);
+  const drawCard = (photo: HTMLImageElement | null) => {
+    // Full-bleed card surface
+    const bg = ctx.createLinearGradient(0, 0, width, height);
+    bg.addColorStop(0, "#0f172a");
+    bg.addColorStop(1, "#0b1220");
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, width, height);
 
-  ctx.fillStyle = "#64748b";
-  ctx.font = "400 22px Geist, Inter, Arial, sans-serif";
-  ctx.fillText(personalInfo.location, 250, 258);
+    // Left profile band
+    const bandW = 390;
+    ctx.fillStyle = "rgba(15, 23, 42, 0.55)";
+    ctx.fillRect(0, 0, bandW, height);
 
-  // Divider
-  ctx.strokeStyle = "rgba(148, 163, 184, 0.22)";
-  ctx.beginPath();
-  ctx.moveTo(120, 320);
-  ctx.lineTo(width - 120, 320);
-  ctx.stroke();
+    const photoPad = 36;
+    const photoW = bandW - photoPad * 2;
+    const photoH = Math.min(height - photoPad * 2, Math.round(photoW * 1.2));
+    const photoX = photoPad;
+    const photoY = (height - photoH) / 2;
 
-  // Contact rows
-  const rows: Array<[string, string]> = [
-    ["Email", personalInfo.email],
-  ];
+    if (photo) {
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(photoX, photoY, photoW, photoH);
+      ctx.clip();
 
-  if (!isPlaceholderLink(personalInfo.linkedin)) {
-    rows.push(["LinkedIn", "linkedin.com/in/jason-choo-7a871228a"]);
-  }
-  if (!isPlaceholderLink(personalInfo.github)) {
-    rows.push(["GitHub", `github.com/${personalInfo.githubHandle}`]);
-  }
-  if (!isPlaceholderLink(personalInfo.instagram)) {
-    rows.push(["Instagram", personalInfo.instagramHandle]);
-  }
+      // Cover-fit crop, slight top bias for face
+      const scale = Math.max(photoW / photo.width, photoH / photo.height);
+      const sw = photoW / scale;
+      const sh = photoH / scale;
+      const sx = (photo.width - sw) / 2;
+      const sy = Math.max(0, (photo.height - sh) * 0.12);
+      ctx.drawImage(photo, sx, sy, sw, sh, photoX, photoY, photoW, photoH);
+      ctx.restore();
 
-  let y = 380;
-  for (const [label, value] of rows) {
-    ctx.fillStyle = "#64748b";
-    ctx.font = "500 20px Geist, Inter, Arial, sans-serif";
-    ctx.fillText(label.toUpperCase(), 120, y);
+      ctx.strokeStyle = "rgba(148, 163, 184, 0.35)";
+      ctx.lineWidth = 2;
+      ctx.strokeRect(photoX, photoY, photoW, photoH);
+    } else {
+      ctx.fillStyle = "rgba(148, 163, 184, 0.12)";
+      ctx.fillRect(photoX, photoY, photoW, photoH);
+      ctx.strokeStyle = "rgba(148, 163, 184, 0.35)";
+      ctx.lineWidth = 2;
+      ctx.strokeRect(photoX, photoY, photoW, photoH);
 
-    ctx.fillStyle = "#e2e8f0";
-    ctx.font = "500 26px Geist, Inter, Arial, sans-serif";
-    ctx.fillText(value, 280, y);
-    y += 58;
-  }
+      ctx.fillStyle = "#94a3b8";
+      ctx.font = "600 48px Geist, Inter, Arial, sans-serif";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText(initials, photoX + photoW / 2, photoY + photoH / 2);
+    }
 
-  // Footer
-  ctx.fillStyle = "#475569";
-  ctx.font = "400 18px Geist, Inter, Arial, sans-serif";
-  ctx.fillText("Digital name card · Jason Choo", 120, height - 90);
+    // Right content
+    const x = bandW + 40;
+    const maxTextW = width - x - 48;
+    let y = 92;
 
-  canvas.toBlob((blob) => {
-    if (!blob) return;
-    const url = URL.createObjectURL(blob);
-    const anchor = document.createElement("a");
-    anchor.href = url;
-    anchor.download = filename;
-    document.body.appendChild(anchor);
-    anchor.click();
-    anchor.remove();
-    URL.revokeObjectURL(url);
-  }, "image/png");
+    ctx.textAlign = "left";
+    ctx.textBaseline = "alphabetic";
+
+    ctx.fillStyle = "#f8fafc";
+    ctx.font = "600 40px Geist, Inter, Arial, sans-serif";
+    y = fillWrappedText(ctx, personalInfo.fullName, x, y, maxTextW, 46);
+
+    ctx.fillStyle = "#cbd5e1";
+    ctx.font = "500 22px Geist, Inter, Arial, sans-serif";
+    ctx.fillText(personalInfo.role, x, y + 36);
+
+    ctx.fillStyle = "#94a3b8";
+    ctx.font = "400 20px Geist, Inter, Arial, sans-serif";
+    ctx.fillText(personalInfo.company, x, y + 68);
+
+    // Contact block
+    const rows: Array<[string, string]> = [
+      ["Email", personalInfo.email],
+      ["Web", websiteHost],
+      ["Based", personalInfo.location],
+    ];
+
+    let rowY = y + 130;
+    for (const [label, value] of rows) {
+      ctx.fillStyle = "#64748b";
+      ctx.font = "500 15px Geist, Inter, Arial, sans-serif";
+      ctx.fillText(label.toUpperCase(), x, rowY);
+
+      ctx.fillStyle = "#e2e8f0";
+      ctx.font = "500 22px Geist, Inter, Arial, sans-serif";
+      ctx.fillText(value, x, rowY + 28);
+      rowY += 72;
+    }
+
+    // Bottom brand line
+    ctx.fillStyle = "#475569";
+    ctx.font = "400 15px Geist, Inter, Arial, sans-serif";
+    ctx.fillText("Digital name card", x, height - 36);
+
+    finish();
+  };
+
+  const img = new Image();
+  img.crossOrigin = "anonymous";
+  img.onload = () => drawCard(img);
+  img.onerror = () => drawCard(null);
+  img.src = personalInfo.profileImage;
 }
 
-function roundRect(
+function fillWrappedText(
   ctx: CanvasRenderingContext2D,
+  text: string,
   x: number,
   y: number,
-  w: number,
-  h: number,
-  r: number,
+  maxWidth: number,
+  lineHeight: number,
 ) {
-  const radius = Math.min(r, w / 2, h / 2);
-  ctx.beginPath();
-  ctx.moveTo(x + radius, y);
-  ctx.arcTo(x + w, y, x + w, y + h, radius);
-  ctx.arcTo(x + w, y + h, x, y + h, radius);
-  ctx.arcTo(x, y + h, x, y, radius);
-  ctx.arcTo(x, y, x + w, y, radius);
-  ctx.closePath();
+  const words = text.split(" ");
+  let line = "";
+  let cy = y;
+
+  for (const word of words) {
+    const test = line ? `${line} ${word}` : word;
+    if (ctx.measureText(test).width > maxWidth && line) {
+      ctx.fillText(line, x, cy);
+      line = word;
+      cy += lineHeight;
+    } else {
+      line = test;
+    }
+  }
+  if (line) ctx.fillText(line, x, cy);
+  return cy;
 }

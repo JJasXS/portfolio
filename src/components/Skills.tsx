@@ -69,7 +69,7 @@ export function Skills() {
   return (
     <section
       id="skills"
-      className="relative scroll-mt-24 overflow-x-clip px-4 py-20 sm:px-6 lg:px-10 xl:px-14 lg:py-28"
+      className="relative scroll-mt-24 overflow-x-clip px-4 pb-20 pt-10 sm:px-6 lg:px-10 xl:px-14 lg:pb-28 lg:pt-14"
     >
       <div
         className="pointer-events-none absolute inset-0 bg-background"

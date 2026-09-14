@@ -40,6 +40,18 @@ export interface JourneyGroup {
  */
 export const journey: JourneyGroup[] = [
   {
+    id: "year-2027",
+    year: "2027",
+    items: [
+      {
+        id: "jci",
+        title: "Vice President of Individual",
+        institution: "Junior Chamber International United Penang",
+        type: "leadership",
+      },
+    ],
+  },
+  {
     id: "year-2026",
     year: "2026",
     items: [
@@ -64,7 +76,7 @@ export const journey: JourneyGroup[] = [
         ],
       },
       {
-        id: "jci",
+        id: "jci-community",
         title: "Vice President of Community",
         institution: "Junior Chamber International United Penang",
         type: "leadership",

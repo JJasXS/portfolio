@@ -122,6 +122,22 @@ export const experiences: ExperienceItem[] = [
     ],
   },
   {
+    id: "jci-vp-2027",
+    year: "2027",
+    organization: "Junior Chamber International United Penang",
+    position: "Vice President of Individual",
+    description:
+      "Supporting individual growth through leadership development, public speaking, and member mentoring.",
+    contributions: [
+      "Develop and nurture future leaders within the chapter",
+      "Build confidence in public speaking and communication among members",
+      "Create a supportive environment for personal growth and service",
+    ],
+    details:
+      "As Vice President of Individual at JCI United Penang, I focus on leadership development, public speaking, and helping members grow through training and mentoring.",
+    kind: "leadership",
+  },
+  {
     id: "jci-vp-2026",
     year: "2026",
     organization: "Junior Chamber International United Penang",
@@ -129,12 +145,12 @@ export const experiences: ExperienceItem[] = [
     description:
       "Leading community initiatives and member development, including flagship outreach projects that support families and strengthen local connections.",
     contributions: [
-      "Develop and nurture future leaders within the chapter",
-      "Build confidence in public speaking and communication among members",
+      "Lead community outreach programmes that support local families",
+      "Coordinate chapter projects with partner organisations",
       "Create a supportive environment for growth and community service",
     ],
     details:
-      "As Vice President of Community at JCI United Penang, I focus on leadership development, public speaking, and community projects that bring people together with practical support and care.",
+      "As Vice President of Community at JCI United Penang, I focus on community projects that bring people together with practical support and care.",
     kind: "leadership",
     projects: [
       {
