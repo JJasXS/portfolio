@@ -1,10 +1,12 @@
 import { Download, ExternalLink } from "lucide-react";
-import { personalInfo } from "@/data/personal";
+import { personalInfo, RESUME_VISIBLE } from "@/data/personal";
 import { FadeIn } from "./FadeIn";
 import { ProfilePhoto } from "./ProfilePhoto";
 import { SectionHeading, SectionShell } from "./Section";
 
 export function Resume() {
+  if (!RESUME_VISIBLE) return null;
+
   return (
     <SectionShell id="resume">
       <div className="grid items-center gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-14">

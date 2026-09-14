@@ -189,7 +189,7 @@ export const experiences: ExperienceItem[] = [
     year: "2021",
     yearEnd: "2022",
     organization: "Penang Hill",
-    position: "Web Designer Intern",
+    position: "Junior Software Engineer",
     description:
       "Supported internal digital operations through web pages and database work.",
     contributions: [

@@ -432,7 +432,7 @@ export function SkillSphere({
   return (
     <div className="relative min-w-0">
       <div
-        className="relative h-[min(72vh,660px)] isolate overflow-hidden rounded-3xl border border-border bg-background shadow-[0_0_80px_-40px_var(--glow)] [contain:paint]"
+        className="relative h-[min(62vh,520px)] isolate overflow-hidden rounded-3xl border border-border bg-background shadow-[0_0_80px_-40px_var(--glow)] [contain:paint] sm:h-[min(72vh,660px)]"
         role="application"
         aria-label="Skill constellation sphere. Drag to rotate. Use buttons to zoom."
       >

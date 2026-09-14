@@ -1,9 +1,10 @@
 "use client";
 
 import { Rocket } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import {
   journey,
+  type JourneyNestedSub,
   type JourneySubItem,
   type JourneyType,
 } from "@/data/journey";
@@ -19,15 +20,16 @@ const typeLabel: Record<JourneyType, string> = {
   leadership: "Leadership",
 };
 
-type JourneyCommit = {
+type JourneyEntry = {
   id: string;
   type: JourneyType;
   title: string;
   institution: string;
-  description: string;
+  description?: string;
   yearLabel: string;
   highlight?: string;
   status?: string;
+  subs?: JourneyNestedSub[];
   isHead: boolean;
 };
 
@@ -36,7 +38,7 @@ function formatYears(year: string, yearEnd?: string) {
   return `${year} – ${yearEnd}`;
 }
 
-function buildCommits(): JourneyCommit[] {
+function buildEntries(): JourneyEntry[] {
   const flat: Array<JourneySubItem & { yearLabel: string }> = [];
 
   for (const group of journey) {
@@ -57,109 +59,112 @@ function buildCommits(): JourneyCommit[] {
     yearLabel: item.yearLabel,
     highlight: item.highlight,
     status: item.status,
+    subs: item.subs,
     isHead: index === 0,
   }));
 }
 
-function CommitRow({
-  commit,
-  expanded,
+function JourneyRow({
+  entry,
   isLast,
-  onToggle,
 }: {
-  commit: JourneyCommit;
-  expanded: boolean;
+  entry: JourneyEntry;
   isLast: boolean;
-  onToggle: () => void;
 }) {
+  const hasSubs = Boolean(entry.subs?.length);
+
   return (
-    <li className="relative">
-      <button
-        type="button"
-        aria-expanded={expanded}
-        onClick={onToggle}
-        className="group grid w-full grid-cols-[1.25rem_minmax(0,1fr)] gap-x-3 rounded-lg px-1 py-2.5 text-left transition hover:bg-white/[0.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400/50"
-      >
-        <span className="relative flex flex-col items-center pt-1.5" aria-hidden>
+    <li className="group relative grid gap-3 sm:grid-cols-[7.5rem_minmax(0,1fr)] sm:gap-x-6">
+      <div className="flex items-center gap-3 sm:block sm:pt-1">
+        <time
+          className={`font-mono text-[12px] tracking-wide sm:text-[13px] ${
+            entry.isHead ? "text-accent" : "text-muted"
+          }`}
+        >
+          {entry.yearLabel}
+        </time>
+      </div>
+
+      <div className="relative grid grid-cols-[1rem_minmax(0,1fr)] gap-x-3 sm:gap-x-4">
+        <div className="relative flex flex-col items-center" aria-hidden>
           <span
-            className={`relative z-[1] h-2.5 w-2.5 rounded-full border ${
-              commit.isHead
-                ? "border-teal-300 bg-teal-400 git-head-pulse"
-                : "border-teal-400/55 bg-[#0b1118]"
+            className={`relative z-[1] mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full border-2 ${
+              entry.isHead
+                ? "border-accent bg-accent shadow-[0_0_0_4px_var(--accent-soft)]"
+                : "border-accent/50 bg-background"
             }`}
           />
           {!isLast ? (
-            <span className="mt-1 w-px flex-1 min-h-[2.5rem] bg-teal-400/25" />
+            <span className="mt-1 w-px flex-1 min-h-[1.5rem] bg-border" />
           ) : null}
-        </span>
+        </div>
 
-        <span className="min-w-0">
-          <span className="flex flex-wrap items-center gap-2">
-            <span className="rounded-full bg-teal-400/10 px-2 py-0.5 text-[11px] font-medium text-teal-300">
-              {typeLabel[commit.type]}
+        <div className="min-w-0 rounded-xl px-1 py-1 transition-colors group-hover:bg-accent-soft/40 sm:px-2 sm:py-1.5">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="rounded-full bg-accent-soft px-2 py-0.5 text-[11px] font-medium text-accent">
+              {typeLabel[entry.type]}
             </span>
 
-            {commit.isHead ? (
-              <span className="rounded-full border border-fuchsia-400/30 bg-fuchsia-400/10 px-2 py-0.5 text-[11px] font-medium text-fuchsia-300">
+            {entry.isHead ? (
+              <span className="rounded-full border border-accent/35 bg-accent-soft px-2 py-0.5 text-[11px] font-medium text-accent">
                 Current
               </span>
             ) : null}
 
-            {commit.status && !commit.isHead ? (
-              <span className="rounded-full border border-teal-400/30 bg-teal-400/10 px-2 py-0.5 text-[11px] font-medium text-teal-300">
-                {commit.status}
+            {entry.status && !entry.isHead ? (
+              <span className="rounded-full border border-border px-2 py-0.5 text-[11px] font-medium text-muted">
+                {entry.status}
               </span>
             ) : null}
 
-            {commit.highlight ? (
-              <span className="rounded-full border border-yellow-400/25 bg-yellow-400/10 px-2 py-0.5 text-[11px] font-medium text-yellow-200/90">
-                {commit.highlight}
+            {entry.highlight ? (
+              <span className="rounded-full border border-border px-2 py-0.5 text-[11px] font-medium text-muted">
+                {entry.highlight}
               </span>
             ) : null}
+          </div>
 
-            <span className="ml-auto hidden text-[12px] text-slate-500 sm:inline">
-              {commit.yearLabel}
-            </span>
-          </span>
+          <h3 className="mt-2 text-[15px] font-medium leading-snug text-foreground sm:text-base">
+            {entry.title}
+          </h3>
 
-          <span className="mt-1.5 block text-[15px] font-medium leading-snug text-slate-100 group-hover:text-white sm:text-base">
-            {commit.title}
-          </span>
+          <p className="mt-0.5 text-[13px] text-muted">{entry.institution}</p>
 
-          <span className="mt-0.5 block text-[13px] text-slate-400">
-            {commit.institution}
-          </span>
+          {entry.description ? (
+            <p className="mt-2 max-w-2xl text-[13px] leading-relaxed text-muted sm:text-sm">
+              {entry.description}
+            </p>
+          ) : null}
 
-          <span className="mt-1 block text-[12px] text-slate-500 sm:hidden">
-            {commit.yearLabel}
-          </span>
-        </span>
-      </button>
-
-      {expanded ? (
-        <div
-          className="ml-[1.25rem] border-l border-teal-400/20 pl-5 pb-3 pt-0.5"
-          role="region"
-          aria-label={`Details for ${commit.title}`}
-        >
-          <p className="max-w-2xl text-[13px] leading-relaxed text-slate-300 sm:text-sm">
-            {commit.description}
-          </p>
+          {hasSubs ? (
+            <ul className="mt-3 space-y-2 border-l border-border pl-3 sm:pl-4">
+              {entry.subs!.map((sub) => (
+                <li key={sub.id} className="min-w-0">
+                  <div className="flex flex-col gap-0.5 sm:flex-row sm:items-baseline sm:gap-3">
+                    <time className="shrink-0 font-mono text-[11px] tracking-wide text-muted sm:w-[6.5rem]">
+                      {sub.yearLabel}
+                    </time>
+                    <span className="text-[13px] font-medium text-foreground sm:text-sm">
+                      {sub.title}
+                    </span>
+                  </div>
+                  {sub.description ? (
+                    <p className="mt-1 text-[12px] leading-relaxed text-muted sm:pl-[calc(6.5rem+0.75rem)]">
+                      {sub.description}
+                    </p>
+                  ) : null}
+                </li>
+              ))}
+            </ul>
+          ) : null}
         </div>
-      ) : null}
-
-      {!isLast && !expanded ? (
-        <div className="ml-[0.55rem] h-1.5 w-px bg-teal-400/25" aria-hidden />
-      ) : null}
+      </div>
     </li>
   );
 }
 
 export function Journey() {
-  const commits = useMemo(() => buildCommits(), []);
-  const [expandedId, setExpandedId] = useState<string | null>(
-    commits[0]?.id ?? null,
-  );
+  const entries = useMemo(() => buildEntries(), []);
 
   return (
     <SectionShell id="journey">
@@ -172,39 +177,17 @@ export function Journey() {
       </FadeIn>
 
       <FadeIn delay={0.08} className="mx-auto mt-10 max-w-4xl">
-        <div className="overflow-hidden rounded-2xl border border-border bg-[#0b1118] shadow-[0_18px_50px_-28px_rgba(45,212,191,0.28)]">
-          <div className="flex items-center gap-3 border-b border-white/10 px-4 py-2.5">
-            <div className="flex gap-1.5" aria-hidden>
-              <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
-              <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
-              <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
-            </div>
-            <p className="text-[11px] tracking-wide text-slate-400">
-              Career timeline
-            </p>
-            <span className="ml-auto text-[10px] uppercase tracking-[0.16em] text-teal-400/80">
-              Story
-            </span>
-          </div>
+        <ol className="space-y-1">
+          {entries.map((entry, index) => (
+            <JourneyRow
+              key={entry.id}
+              entry={entry}
+              isLast={index === entries.length - 1}
+            />
+          ))}
+        </ol>
 
-          <ol className="px-3 py-3 sm:px-4">
-            {commits.map((commit, index) => (
-              <CommitRow
-                key={commit.id}
-                commit={commit}
-                expanded={expandedId === commit.id}
-                isLast={index === commits.length - 1}
-                onToggle={() =>
-                  setExpandedId((prev) =>
-                    prev === commit.id ? null : commit.id,
-                  )
-                }
-              />
-            ))}
-          </ol>
-        </div>
-
-        <div className="mt-6 inline-flex items-center gap-2 text-sm text-muted">
+        <div className="mt-8 inline-flex items-center gap-2 text-sm text-muted">
           <Rocket className="h-4 w-4 text-accent" aria-hidden="true" />
           Next: building, shipping, and growing as an engineer
         </div>

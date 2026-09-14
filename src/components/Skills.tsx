@@ -13,8 +13,6 @@ import {
 } from "@/data/skills";
 import { isPlaceholderLink } from "@/lib/utils";
 import { FadeIn } from "./FadeIn";
-import { SkillCarousel } from "./SkillCarousel";
-import { SkillCategoryGrid } from "./SkillCategoryGrid";
 import { SkillLogo } from "./SkillLogo";
 import { SkillSphere } from "./SkillSphere";
 
@@ -68,27 +66,6 @@ export function Skills() {
 
   const relatedProjects = selected ? getRelatedProjects(selected) : [];
 
-  const mobileCategoryPages = skillCategories
-    .filter((category) => category.id !== "all")
-    .map((category) => {
-      const items = skills.filter((skill) => skill.category === category.id);
-      return { category, items };
-    })
-    .filter(({ items }) => items.length > 0)
-    .map(({ category, items }) => ({
-      id: category.id,
-      label: category.label,
-      content: (
-        <SkillCategoryGrid
-          items={items}
-          selectedId={selectedId}
-          onSelect={(id) =>
-            setSelectedId((prev) => (prev === id ? null : id))
-          }
-        />
-      ),
-    }));
-
   return (
     <section
       id="skills"
@@ -128,7 +105,7 @@ export function Skills() {
           </div>
         </FadeIn>
 
-        <FadeIn delay={0.06} className="mt-8 hidden md:block">
+        <FadeIn delay={0.06} className="mt-8">
           <div
             className="flex flex-wrap justify-center gap-2"
             role="tablist"
@@ -163,7 +140,7 @@ export function Skills() {
               : "lg:grid-cols-1"
           }`}
         >
-          <FadeIn delay={0.1} className="relative hidden min-w-0 md:block">
+          <FadeIn delay={0.1} className="relative min-w-0">
             <SkillSphere
               focusId={focusId}
               selectedId={selectedId}
@@ -205,8 +182,6 @@ export function Skills() {
               Drag to spin the sphere. Use +/- to zoom. Wires pulse as you move.
             </p>
           </FadeIn>
-
-          <SkillCarousel pages={mobileCategoryPages} />
 
           {selected ? (
             <FadeIn delay={0.12} className="min-w-0">

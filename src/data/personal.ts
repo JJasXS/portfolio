@@ -39,6 +39,9 @@ export const personalInfo = {
   lookingFor: "Open to meaningful opportunities and collaborations.",
 } as const;
 
+/** Flip to true to show the Resume section and nav link. */
+export const RESUME_VISIBLE = false;
+
 export const socialLinks = [
   {
     id: "linkedin",

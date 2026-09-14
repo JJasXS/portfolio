@@ -5,7 +5,7 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, type MouseEvent } from "react";
-import { navLinks, personalInfo } from "@/data/personal";
+import { navLinks, personalInfo, RESUME_VISIBLE } from "@/data/personal";
 import { PORTFOLIO_LOCKED } from "@/data/projects";
 import { ThemeToggle } from "./ThemeToggle";
 
@@ -14,6 +14,10 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
   const reduce = useReducedMotion();
   const pathname = usePathname();
+
+  const links = navLinks.filter(
+    (link) => RESUME_VISIBLE || link.href !== "/#resume",
+  );
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -63,7 +67,7 @@ export function Navbar() {
         </Link>
 
         <ul className="hidden items-center gap-1 md:flex">
-          {navLinks.map((link) => {
+          {links.map((link) => {
             const active =
               link.href === "/portfolio"
                 ? pathname.startsWith("/portfolio")
@@ -113,7 +117,7 @@ export function Navbar() {
             className="border-b border-border bg-background/95 backdrop-blur-xl md:hidden"
           >
             <ul className="mx-auto flex max-w-[1600px] flex-col gap-1 px-4 py-4 sm:px-6 lg:px-10 xl:px-14">
-              {navLinks.map((link) => (
+              {links.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}

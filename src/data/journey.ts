@@ -6,15 +6,25 @@ export type JourneyType =
   | "achievement"
   | "leadership";
 
+export interface JourneyNestedSub {
+  id: string;
+  title: string;
+  yearLabel: string;
+  description?: string;
+}
+
 export interface JourneySubItem {
   id: string;
   title: string;
   institution: string;
-  description: string;
+  /** Omit when `subs` carry the detail instead. */
+  description?: string;
   type: JourneyType;
   highlight?: string;
   /** Optional status chip, e.g. Present */
   status?: string;
+  /** Compact nested rows (e.g. degrees under one school). */
+  subs?: JourneyNestedSub[];
 }
 
 export interface JourneyGroup {
@@ -34,62 +44,56 @@ export const journey: JourneyGroup[] = [
     year: "2026",
     items: [
       {
-        id: "procc-se",
-        title: "Software Engineer",
-        institution: "Procc System Consulting",
-        description:
-          "Currently employed full-time, building and maintaining business systems and ERP-integrated workflows.",
+        id: "procc",
+        title: "Procc System Consulting",
+        institution: "Software Engineer · converted from internship",
         type: "work",
-        highlight: "Full-time",
         status: "Present",
-      },
-      {
-        id: "procc-intern",
-        title: "Software Engineer Intern",
-        institution: "Procc System Consulting",
-        description:
-          "Built business systems including scanning, appointment booking, approval, procurement, and auto-emailing services using C#/.NET, Python, SQL, and Firebird. Integrated workflows with SQL Account ERP.",
-        type: "internship",
+        highlight: "Full-time",
+        subs: [
+          {
+            id: "procc-fulltime",
+            title: "Software Engineer",
+            yearLabel: "Full-time",
+          },
+          {
+            id: "procc-intern",
+            title: "Software Engineer Intern",
+            yearLabel: "Internship",
+          },
+        ],
       },
       {
         id: "jci",
         title: "Vice President of Community",
         institution: "Junior Chamber International United Penang",
-        description:
-          "Leading community initiatives and member development. Includes Care for Every Family (Organising Chairperson), a B40 family outreach day with free care services and support.",
         type: "leadership",
       },
     ],
   },
   {
-    id: "year-bse",
-    year: "2024",
+    id: "year-education",
+    year: "2021",
     yearEnd: "2026",
     items: [
       {
-        id: "bse",
-        title: "Bachelor of Software Engineering",
+        id: "tar-umt-studies",
+        title: "Software Engineering studies",
         institution:
           "Tunku Abdul Rahman University of Management & Technology, Penang Branch",
-        description:
-          "Pursuing a bachelor's degree focused on software engineering principles, system design, and practical application development.",
         type: "education",
-      },
-    ],
-  },
-  {
-    id: "year-diploma",
-    year: "2021",
-    yearEnd: "2023",
-    items: [
-      {
-        id: "diploma",
-        title: "Diploma in Information Technology",
-        institution:
-          "Tunku Abdul Rahman University of Management & Technology, Penang Branch",
-        description:
-          "Built foundational skills in IT, programming, databases, and web development.",
-        type: "education",
+        subs: [
+          {
+            id: "bse",
+            title: "Bachelor of Software Engineering",
+            yearLabel: "2024 – 2026",
+          },
+          {
+            id: "diploma",
+            title: "Diploma in Information Technology",
+            yearLabel: "2021 – 2023",
+          },
+        ],
       },
     ],
   },
@@ -100,7 +104,7 @@ export const journey: JourneyGroup[] = [
     items: [
       {
         id: "penang-hill",
-        title: "Web Designer Intern",
+        title: "Junior Software Engineer",
         institution: "Penang Hill",
         description:
           "Developed internal web pages, enhanced existing databases, and gained hands-on experience with GitHub, WordPress, and Visual Studio Code.",
