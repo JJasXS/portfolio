@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Poon Wee Yee - Interior Designer</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 9mm 10mm;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --ink: #2a2622;
+        --muted: #6b645c;
+        --line: #ddd6cc;
+        --accent: #8b7355;
+        --accent-soft: #f3eee6;
+        --paper: #fbf8f4;
+      }
+
+      body {
+        font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+        font-size: 11.5pt;
+        line-height: 1.32;
+        color: var(--ink);
+        background: transparent;
+        text-align: justify;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      @media screen {
+        html {
+          background: #e8e2d8;
+        }
+
+        body {
+          margin: 0;
+          padding: 18px 0 40px;
+        }
+
+        #resume {
+          width: 210mm;
+          min-height: 297mm;
+          margin: 0 auto;
+          padding: 10mm 12mm;
+          background: var(--paper);
+          box-shadow: 0 10px 40px rgba(42, 38, 34, 0.12);
+        }
+      }
+
+      @media print {
+        #resume {
+          background: #fff;
+        }
+
+        .pdf-bar {
+          display: none !important;
+        }
+      }
+
+      .pdf-bar {
+        position: fixed;
+        top: 16px;
+        right: 16px;
+        z-index: 50;
+      }
+
+      .pdf-btn {
+        appearance: none;
+        border: 0;
+        border-radius: 10px;
+        padding: 12px 18px;
+        font: 600 14px/1.2 "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+        color: #fff;
+        background: var(--accent);
+        cursor: pointer;
+        box-shadow: 0 8px 24px rgba(42, 38, 34, 0.18);
+      }
+
+      .pdf-btn:hover {
+        filter: brightness(0.95);
+      }
+
+      .pdf-btn:disabled {
+        opacity: 0.7;
+        cursor: wait;
+      }
+
+      .pdf-btn:focus-visible {
+        outline: 2px solid var(--ink);
+        outline-offset: 2px;
+      }
+
+      .masthead {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 5mm;
+        padding-bottom: 3.5mm;
+        border-bottom: 2px solid var(--accent);
+        text-align: left;
+      }
+
+      .identity {
+        min-width: 0;
+        flex: 1 1 auto;
+      }
+
+      h1 {
+        margin: 0;
+        font-family: Georgia, "Times New Roman", Times, serif;
+        font-size: 30pt;
+        font-weight: 400;
+        letter-spacing: 0.01em;
+        line-height: 1.02;
+        color: var(--ink);
+        text-align: left;
+      }
+
+      .role {
+        margin: 1.2mm 0 0;
+        font-size: 12pt;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--accent);
+        text-align: left;
+      }
+
+      .contact {
+        margin: 0;
+        flex: 0 1 38%;
+        min-width: 0;
+        text-align: right;
+        font-size: 10pt;
+        line-height: 1.4;
+        color: var(--muted);
+        overflow-wrap: anywhere;
+        word-break: break-word;
+      }
+
+      .contact a {
+        color: var(--ink);
+        text-decoration: none;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+      }
+
+      .summary {
+        margin: 3mm 0 0;
+        color: var(--ink);
+        text-align: justify;
+        font-size: 11.5pt;
+        line-height: 1.35;
+      }
+
+      h2 {
+        margin: 3.5mm 0 1.6mm;
+        font-size: 11pt;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent);
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 1mm;
+        text-align: left;
+      }
+
+      .grid-2 {
+        display: flex;
+        align-items: flex-start;
+        gap: 7mm;
+        margin-top: 0.5mm;
+      }
+
+      .grid-2 > section {
+        flex: 1.45;
+        min-width: 0;
+      }
+
+      .grid-2 > aside {
+        flex: 1;
+        min-width: 0;
+        overflow: visible;
+      }
+
+      .job {
+        margin: 0 0 2.4mm;
+      }
+
+      .job:last-child {
+        margin-bottom: 0;
+      }
+
+      .job-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 3mm;
+        text-align: left;
+      }
+
+      .job-title {
+        margin: 0;
+        font-size: 12pt;
+        font-weight: 700;
+        color: var(--ink);
+        text-align: left;
+        line-height: 1.2;
+      }
+
+      .job-dates {
+        flex: 0 0 auto;
+        font-size: 10.5pt;
+        color: var(--muted);
+        white-space: nowrap;
+        text-align: right;
+      }
+
+      .job-org {
+        margin: 0.2mm 0 0;
+        font-size: 11pt;
+        line-height: 1.2;
+        color: var(--muted);
+        text-align: left;
+      }
+
+      .job-note {
+        margin: 0.4mm 0 0;
+        font-size: 11pt;
+        line-height: 1.25;
+        color: var(--ink);
+        text-align: justify;
+      }
+
+      .studio-list {
+        margin: 0.4mm 0 0;
+        padding: 0;
+        list-style: none;
+        text-align: left;
+      }
+
+      .studio-list li {
+        margin: 0;
+        padding: 0;
+        font-size: 11pt;
+        line-height: 1.18;
+        color: var(--muted);
+      }
+
+      .edu {
+        margin: 0 0 3.5mm;
+      }
+
+      .edu:last-child {
+        margin-bottom: 0;
+      }
+
+      .edu-title {
+        margin: 0;
+        font-size: 11.5pt;
+        font-weight: 700;
+        line-height: 1.25;
+        text-align: left;
+      }
+
+      .edu-meta {
+        margin: 0.8mm 0 0;
+        color: var(--muted);
+        font-size: 10.5pt;
+        line-height: 1.35;
+        text-align: left;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+      }
+
+      .point-list {
+        margin: 0;
+        padding-left: 4.5mm;
+        text-align: left;
+        columns: 2;
+        column-gap: 3mm;
+      }
+
+      .point-list li {
+        margin: 0.2mm 0;
+        font-size: 11pt;
+        line-height: 1.25;
+        color: var(--ink);
+        break-inside: avoid;
+      }
+
+      .expertise {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .expertise li {
+        position: relative;
+        padding: 1.2mm 0 1.2mm 3.5mm;
+        border-bottom: 1px solid var(--line);
+        font-size: 11pt;
+        line-height: 1.2;
+        text-align: left;
+      }
+
+      .expertise li:last-child {
+        border-bottom: 0;
+      }
+
+      .expertise li::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 3.4mm;
+        width: 1.6mm;
+        height: 1.6mm;
+        border-radius: 50%;
+        background: var(--accent);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="pdf-bar">
+      <button type="button" class="pdf-btn" id="download-pdf">
+        Download PDF
+      </button>
+    </div>
+
+    <div id="resume">
+    <header class="masthead">
+      <div class="identity">
+        <h1>Poon Wee Yee</h1>
+        <p class="role">Interior Designer</p>
+      </div>
+      <p class="contact">
+        <a href="mailto:weeyeepoon@gmail.com">weeyeepoon@gmail.com</a><br />
+        011-3643 3016
+      </p>
+    </header>
+
+    <p class="summary">
+      Interior designer with experience across residential and commercial
+      interiors, from measured survey and technical detailing through 3D
+      visualisation, material selection, and client-facing sales design.
+      Comfortable working with studios, contractors, and furnishing brands,
+      and committed to clear communication and continuous craft development.
+    </p>
+
+    <div class="grid-2">
+      <section>
+        <h2>Experience</h2>
+
+        <article class="job">
+          <div class="job-head">
+            <p class="job-title">Interior Designer</p>
+            <p class="job-dates">Jul 2024 - Mar 2026</p>
+          </div>
+          <p class="job-org">MRC Construction</p>
+        </article>
+
+        <article class="job">
+          <div class="job-head">
+            <p class="job-title">Independent 3D Visualiser &amp; Drafter</p>
+          </div>
+          <p class="job-note">
+            Independent visualisation and drafting support for interior design
+            projects.
+          </p>
+        </article>
+
+        <article class="job">
+          <div class="job-head">
+            <p class="job-title">Design Studio Collaborations (Freelance)</p>
+            <p class="job-dates">Nov 2022 - Jul 2024</p>
+          </div>
+          <ul class="studio-list">
+            <li>Impressive Unit Sdn Bhd</li>
+            <li>Inspiring Design &amp; Build</li>
+            <li>KS Interior Design</li>
+            <li>Aoya Interior Design</li>
+            <li>Bianco Design Lab</li>
+          </ul>
+        </article>
+
+        <article class="job">
+          <div class="job-head">
+            <p class="job-title">Sales Designer (Contract)</p>
+            <p class="job-dates">Nov 2022 - May 2024</p>
+          </div>
+          <p class="job-org">Aino Furnishing Sdn. Bhd.</p>
+        </article>
+
+        <article class="job">
+          <div class="job-head">
+            <p class="job-title">Sales &amp; Marketing Executive</p>
+            <p class="job-dates">Aug 2022 - Nov 2022</p>
+          </div>
+          <p class="job-org">Jayamas Property Sdn. Bhd.</p>
+        </article>
+
+        <article class="job">
+          <div class="job-head">
+            <p class="job-title">Sales Designer</p>
+            <p class="job-dates">Mar 2022 - Aug 2022</p>
+          </div>
+          <p class="job-org">Crownlivin</p>
+        </article>
+
+        <article class="job">
+          <div class="job-head">
+            <p class="job-title">Marketing &amp; Merchandiser</p>
+            <p class="job-dates">Sep 2020 - Dec 2020</p>
+          </div>
+          <p class="job-org">
+            Bloom &amp; Grow Baby and Maternity Distribution (M) Sdn. Bhd.
+          </p>
+        </article>
+
+        <article class="job">
+          <div class="job-head">
+            <p class="job-title">Internship Interior Designer</p>
+            <p class="job-dates">Dec 2018 - Mar 2019</p>
+          </div>
+          <p class="job-org">Moon Work Sdn. Bhd.</p>
+        </article>
+
+        <article class="job">
+          <div class="job-head">
+            <p class="job-title">Measuring Assistant - Heritage Building</p>
+            <p class="job-dates">Oct 2017 - Jan 2018</p>
+          </div>
+          <p class="job-org">AO Architect · Penang</p>
+          <p class="job-note">
+            Supported measured survey work for a heritage building project in
+            Penang.
+          </p>
+        </article>
+      </section>
+
+      <aside>
+        <h2>Expertise</h2>
+        <ul class="expertise">
+          <li>Spatial planning &amp; layout</li>
+          <li>3D interior visualisation</li>
+          <li>Technical drawing &amp; detailing</li>
+          <li>Material selection</li>
+        </ul>
+
+        <h2>Skills</h2>
+        <ul class="point-list">
+          <li>AutoCAD</li>
+          <li>3ds Max</li>
+          <li>Coohom</li>
+          <li>Photoshop</li>
+          <li>Illustrator</li>
+          <li>Canva</li>
+          <li>Hand sketch</li>
+          <li>Marker render</li>
+          <li>Watercolour</li>
+        </ul>
+
+        <h2>Languages</h2>
+        <ul class="point-list">
+          <li>Mandarin</li>
+          <li>Malay</li>
+          <li>English</li>
+          <li>Cantonese</li>
+        </ul>
+
+        <h2>Education</h2>
+        <div class="edu">
+          <p class="edu-title">Diploma in Interior Design</p>
+          <p class="edu-meta">Equator College · 2016 - 2020</p>
+        </div>
+        <div class="edu">
+          <p class="edu-title">Sijil Pelajaran Malaysia (SPM)</p>
+          <p class="edu-meta">SMK Bagan Serai</p>
+          <p class="edu-meta">2011 - 2015</p>
+        </div>
+      </aside>
+    </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+      document.getElementById("download-pdf").addEventListener("click", async () => {
+        const button = document.getElementById("download-pdf");
+        const resume = document.getElementById("resume");
+        const JsPDF = window.jspdf && window.jspdf.jsPDF;
+
+        if (!resume || typeof html2canvas !== "function" || !JsPDF) {
+          alert("PDF library failed to load. Check your internet connection and refresh.");
+          return;
+        }
+
+        const original = button.textContent;
+        button.disabled = true;
+        button.textContent = "Preparing…";
+
+        const prev = {
+          width: resume.style.width,
+          maxWidth: resume.style.maxWidth,
+          minHeight: resume.style.minHeight,
+          boxShadow: resume.style.boxShadow,
+        };
+
+        try {
+          resume.style.width = "210mm";
+          resume.style.maxWidth = "210mm";
+          resume.style.minHeight = "297mm";
+          resume.style.boxShadow = "none";
+          await new Promise((r) => requestAnimationFrame(() => r()));
+
+          const canvas = await html2canvas(resume, {
+            scale: 2,
+            useCORS: true,
+            allowTaint: true,
+            backgroundColor: "#fbf8f4",
+            logging: false,
+            scrollX: 0,
+            scrollY: -window.scrollY,
+            windowWidth: Math.ceil(resume.getBoundingClientRect().width),
+            windowHeight: Math.ceil(resume.getBoundingClientRect().height),
+          });
+
+          const imgData = canvas.toDataURL("image/jpeg", 0.98);
+          const pdf = new JsPDF({
+            orientation: "portrait",
+            unit: "mm",
+            format: "a4",
+          });
+
+          const pageW = 210;
+          const pageH = 297;
+
+          // Fill whole page with resume paper colour (no white border)
+          pdf.setFillColor(251, 248, 244);
+          pdf.rect(0, 0, pageW, pageH, "F");
+
+          // Stretch to full page width; scale height to fit if needed
+          let drawW = pageW;
+          let drawH = (canvas.height * drawW) / canvas.width;
+          if (drawH > pageH) {
+            drawH = pageH;
+            drawW = (canvas.width * drawH) / canvas.height;
+          }
+
+          const x = (pageW - drawW) / 2;
+          const y = 0;
+          pdf.addImage(imgData, "JPEG", x, y, drawW, drawH);
+          pdf.save("Poon-Wee-Yee-Resume.pdf");
+        } catch (err) {
+          console.error(err);
+          alert("Could not create PDF. Please refresh and try again.");
+        } finally {
+          resume.style.width = prev.width;
+          resume.style.maxWidth = prev.maxWidth;
+          resume.style.minHeight = prev.minHeight;
+          resume.style.boxShadow = prev.boxShadow;
+          button.disabled = false;
+          button.textContent = original;
+        }
+      });
+    </script>
+  </body>
+</html>
