@@ -79,15 +79,32 @@
         color: #222;
       }
 
+      .base {
+        margin: 1mm 0 0;
+        font-size: 9.6pt;
+        color: #555;
+      }
+
       .contact {
-        margin: 2mm 0 0;
-        font-size: 9.2pt;
+        margin: 2.2mm 0 0;
+        font-size: 9.1pt;
         color: #333;
       }
 
-      .contact span + span::before {
+      .contact-row {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        margin: 0;
+      }
+
+      .contact-row + .contact-row {
+        margin-top: 0.7mm;
+      }
+
+      .contact-row span + span::before {
         content: "·";
-        margin: 0 2.2mm;
+        margin: 0 2mm;
         color: #aaa;
       }
 
@@ -175,12 +192,17 @@
       <div class="identity">
         <h1>Jason Choo Jie Sern</h1>
         <p class="role">Software Engineer</p>
-        <p class="contact">
-          <span>jason.choo2004@gmail.com</span>
-          <span>Penang, Malaysia</span>
-          <span>github.com/JJasXS</span>
-          <span>LinkedIn</span>
-        </p>
+        <p class="base">Based in: Penang, Malaysia</p>
+        <div class="contact">
+          <p class="contact-row">
+            <span>017-546 2962</span>
+            <span>jason.choo2004@gmail.com</span>
+          </p>
+          <p class="contact-row">
+            <span>github.com/JJasXS</span>
+            <span>linkedin.com/in/jason-choo-7a871228a</span>
+          </p>
+        </div>
       </div>
     </header>
     <hr class="rule" />
@@ -197,17 +219,23 @@
     <div class="entry">
       <div class="entry-head">
         <span class="entry-title">Software Engineer</span>
-        <span class="entry-dates">Feb 2026 - Present (7 mo)</span>
+        <span class="entry-dates">Feb 2026 - Present (9 mo)</span>
       </div>
       <p class="entry-org">
-        Procc System Consulting ·
-        <em>Intern Feb-Jun 2026, converted to full-time</em>
+        ProAcc System Consulting (SEA) Sdn Bhd ·
+        <em>Full-time</em>
       </p>
       <ul>
         <li>
           Own and enhance production business systems (ProAcc eScan, Appointment
           Booking, eApproval, eQuote Hub, Auto Emailing) built with C#/.NET,
           Python, HTML/CSS, and JavaScript.
+        </li>
+        <li>
+          Implemented RFID stock inventory end to end, hardware and software:
+          connected a Chainway C5 UHF handheld through its SDK to ApprovalPO so
+          one scan pass can read multiple products and update stock without
+          opening the ERP desktop.
         </li>
         <li>
           Connect custom apps to SQL Account ERP so quotation, procurement,
@@ -276,8 +304,9 @@
         CSS, Firebird, MSSQL, SQL Account ERP, Git
       </p>
       <p>
-        <strong>Focus:</strong> Business applications, ERP integration, database
-        management, Windows Services, SDLC, deployment &amp; support
+        <strong>Focus:</strong> Business applications, ERP integration, RFID /
+        UHF handheld SDK, database management, Windows Services, SDLC,
+        deployment &amp; support
       </p>
       <p>
         <strong>Soft skills:</strong> Teamwork, communication, problem-solving,
