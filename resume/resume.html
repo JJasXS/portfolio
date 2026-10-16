@@ -51,11 +51,11 @@
       }
 
       .portrait {
-        width: 34mm;
+        width: 42mm;
         aspect-ratio: 4 / 5;
         flex: 0 0 auto;
         object-fit: cover;
-        object-position: center 18%;
+        object-position: center;
         border-radius: 2.5mm;
       }
 
@@ -123,8 +123,16 @@
         color: #111;
       }
 
-      .summary {
+      .summary,
+      li {
         margin: 0;
+        text-align: justify;
+        text-justify: inter-word;
+        hyphens: auto;
+      }
+
+      li {
+        margin-top: 0.7mm;
       }
 
       .entry {
@@ -169,26 +177,34 @@
         padding-left: 4.2mm;
       }
 
-      li {
-        margin-top: 0.7mm;
-      }
-
       li::marker {
         color: #999;
       }
 
       .skills p {
+        display: flex;
+        align-items: flex-start;
+        gap: 2mm;
         margin: 0 0 1mm;
       }
 
       .skills strong {
+        flex: 0 0 22mm;
         color: #111;
+      }
+
+      .skills span {
+        flex: 1;
+        min-width: 0;
+        text-align: justify;
+        text-justify: inter-word;
+        hyphens: auto;
       }
     </style>
   </head>
   <body>
     <header class="masthead">
-      <img class="portrait" src="../public/profile/jason.jpg" alt="Jason Choo Jie Sern" />
+      <img class="portrait" src="../public/profile/jason-resume.jpg" alt="Jason Choo Jie Sern" />
       <div class="identity">
         <h1>Jason Choo Jie Sern</h1>
         <p class="role">Software Engineer</p>
@@ -227,6 +243,7 @@
       </p>
       <ul>
         <li>
+<<<<<<< Updated upstream
           Delivered ProAcc eScan (ASP.NET Core + Firebird): live stock
           validation with location, project, and last-scan updates.
         </li>
@@ -249,6 +266,36 @@
         <li>
           Automated scheduled Excel/PDF reporting in Auto Emailing, a Windows
           Service that pulls Firebird data and sends it over SMTP.
+=======
+          Build and improve the company's daily systems: stock scanning (ProAcc
+          eScan), appointment booking, approvals (eApproval), quotations (eQuote
+          Hub), and automatic email reports, using C#/.NET, Python, and web
+          tools.
+        </li>
+        <li>
+          Set up RFID stock counting from handheld scanner to software: staff
+          walk the floor with a Chainway C5 reader, scan many products in one
+          pass, and stock updates in ApprovalPO without opening the accounting
+          system.
+        </li>
+        <li>
+          Connect our apps to SQL Account so quotes, purchases, approvals,
+          stock, customers, and invoices follow one process instead of separate
+          systems.
+        </li>
+        <li>
+          Built ProAcc eScan so warehouse staff can check stock on the spot, see
+          location and last scan, and managers can approve purchase and sales
+          orders and goods received based on their role.
+        </li>
+        <li>
+          Launched a buying and quotation website where suppliers can bid, with
+          live data from the company's accounting system.
+        </li>
+        <li>
+          Set up automatic Excel and PDF reports that email on a schedule, then
+          test, go live, and support users after each release.
+>>>>>>> Stashed changes
         </li>
       </ul>
     </div>
@@ -294,18 +341,26 @@
     <h2>Skills</h2>
     <div class="skills">
       <p>
-        <strong>Core stack:</strong> C#/.NET, Python, SQL, JavaScript, HTML,
-        CSS, Firebird, MSSQL, SQL Account ERP, Git
+        <strong>Core stack:</strong>
+        <span>C#/.NET, Python, SQL, JavaScript, HTML, CSS, Firebird, MSSQL, SQL Account ERP, Git</span>
       </p>
       <p>
+<<<<<<< Updated upstream
         <strong>Focus:</strong> Business applications, ERP integration,
         database management, Windows Services, SDLC, deployment &amp; support
+=======
+        <strong>Focus:</strong>
+        <span>Business applications, ERP integration, RFID / UHF handheld SDK, database management, Windows Services, SDLC, deployment &amp; support</span>
+>>>>>>> Stashed changes
       </p>
       <p>
-        <strong>Soft skills:</strong> Teamwork, communication, problem-solving,
-        time management
+        <strong>Soft skills:</strong>
+        <span>Teamwork, communication, problem-solving, time management</span>
       </p>
-      <p><strong>Languages:</strong> English, Bahasa Melayu, Mandarin</p>
+      <p>
+        <strong>Languages:</strong>
+        <span>English, Bahasa Melayu, Mandarin</span>
+      </p>
     </div>
 
     <h2>Activities</h2>
